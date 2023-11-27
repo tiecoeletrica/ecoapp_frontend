@@ -50,11 +50,21 @@ const SignInForm = () => {
         alt="Logotipo da empresa EcoElétrica, contendo uma folha estilizada que se assemelha a um raio, com as cores azul e verde."
       />
       <div>
-        <Input type="email" title="E-mail" {...register("email")} />
+        <Input
+          type="email"
+          title="E-mail"
+          {...register("email")}
+          placeholder="Digite o seu email..."
+        />
         {errors.email && <span>{errors.email.message}</span>}
       </div>
-      <div>
-        <Input type="password" title="Senha" {...register("password")} />
+      <div className="mb-2">
+        <Input
+          type="password"
+          title="Senha"
+          {...register("password")}
+          placeholder="Digite a sua senha..."
+        />
         {errors.password && <span>{errors.password.message}</span>}
       </div>
       <Button variant="default" type="submit">
