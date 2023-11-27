@@ -1,6 +1,8 @@
 "use client";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../_ui/Button";
@@ -17,12 +19,13 @@ const createUserFormSchema = z.object({
     .email("Formato de email inválido")
     .refine((email) => {
       return email.endsWith("@ecoeletrica.com.br");
-    }, "O email deve conter o dominio da Ecoelétrica"),
+    }, "O email deve conter o domínio da Ecoelétrica"),
   password: z.string().min(6, "A senha precisa conter no minimo 6 caracteres"),
 });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
 const SignInForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,16 +33,26 @@ const SignInForm = () => {
   } = useForm<createUserFormData>({
     resolver: zodResolver(createUserFormSchema),
   });
-  console.log(errors);
 
-  function createUser(data: object) {
-    alert("Pode buscar no banco de dados");
-    console.log(data);
-  }
+  const onSubmit = async (values: createUserFormData) => {
+    console.log(values);
+    const signInData = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
+
+    if (signInData?.error) {
+      alert("Login não foi encontrado");
+    } else {
+      router.refresh();
+      router.push("/admin");
+    }
+  };
 
   return (
     <form
-      onSubmit={handleSubmit(createUser)}
+      onSubmit={handleSubmit(onSubmit)}
       className="min-w-[490px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 bg-white"
     >
       <Image

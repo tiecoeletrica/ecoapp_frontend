@@ -12,9 +12,9 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  // pages: {
-  //   signIn: "/sign-in",
-  // },
+  pages: {
+    signIn: "/sign-in",
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
 
         const passwordMatch = await compare(
           credentials.password,
-          existingUser.senha,
+          existingUser.password,
         );
 
         if (!passwordMatch) {
@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: `${existingUser.id}`,
-          username: existingUser.nome,
+          username: existingUser.username,
           email: existingUser.email,
         };
       },
@@ -67,7 +67,7 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
-          username: token.username,
+          username: token.name,
         },
       };
     },
