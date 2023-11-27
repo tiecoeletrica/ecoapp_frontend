@@ -1,5 +1,5 @@
+// import SignInForm from "@/components/form/SignInForm";
 import SignInForm from "@/components/form/SignInForm";
-// import SignUpForm from "@/components/form/SignUpForm";
 
 export default function Home() {
   return (

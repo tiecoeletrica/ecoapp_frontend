@@ -1,5 +1,11 @@
+import SignInForm from "@/components/form/SignInForm";
+
 const page = () => {
-  return <div className="w-full">A aqui você vai solicitar o cadastro.</div>;
+  return (
+    <div className="w-full">
+      <SignInForm />
+    </div>
+  );
 };
 
 export default page;
