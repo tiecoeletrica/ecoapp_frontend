@@ -1,0 +1,72 @@
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+
+import { Button } from "../_ui/Button";
+import { Input } from "../_ui/Input";
+import Logo from "../../../public/logo.svg";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const createUserFormSchema = z.object({
+  email: z
+    .string()
+    .nonempty("O email é obrigatório!")
+    .email("Formato de email inválido")
+    .refine((email) => {
+      return email.endsWith("@ecoeletrica.com.br");
+    }, "O email deve conter o dominio da Ecoelétrica"),
+  password: z.string().min(6, "A senha precisa conter no minimo 6 caracteres"),
+});
+type createUserFormData = z.infer<typeof createUserFormSchema>;
+
+const SignInForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<createUserFormData>({
+    resolver: zodResolver(createUserFormSchema),
+  });
+  console.log(errors);
+
+  function createUser(data: object) {
+    alert("Pode buscar no banco de dados");
+    console.log(data);
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit(createUser)}
+      className="min-w-[490px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 bg-white"
+    >
+      <Image
+        style={{ display: "block", margin: "auto", marginBottom: "40px" }}
+        src={Logo}
+        width={200}
+        height={200}
+        alt="Logotipo da empresa EcoElétrica, contendo uma folha estilizada que se assemelha a um raio, com as cores azul e verde."
+      />
+      <div>
+        <Input type="email" title="E-mail" {...register("email")} />
+        {errors.email && <span>{errors.email.message}</span>}
+      </div>
+      <div>
+        <Input type="password" title="Senha" {...register("password")} />
+        {errors.password && <span>{errors.password.message}</span>}
+      </div>
+      <Button variant="default" type="submit">
+        Entrar
+      </Button>
+      <Link
+        href={"/"}
+        className="flex justify-center mt-5 font-bold text-blue-dark outline-none"
+      >
+        Solicitar acesso
+      </Link>
+    </form>
+  );
+};
+export default SignInForm;
