@@ -4,7 +4,7 @@ import { cn } from "../../../lib/utils";
 
 import { cva, type VariantProps } from "class-variance-authority";
 
-const inputVariants = cva(
+const selectVariants = cva(
   "flex items-center justify-between column border border-solid border-gray px-2 h-12 my-2 rounded outline-none",
   {
     variants: {
@@ -25,21 +25,21 @@ const inputVariants = cva(
   },
 );
 
-export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
-    VariantProps<typeof inputVariants> {
-  inputSize?: string; // Renomeando para evitar conflito
+export interface SelectProps
+  extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size">,
+    VariantProps<typeof selectVariants> {
+  selectSize?: string;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, title, variant, size, ...props }, ref) => {
     return (
       <div className="flex flex-col">
         <label className="block text-center text-blue-dark font-bold my-2 text-base">
           {title}
         </label>
-        <input
-          className={cn(inputVariants({ variant, size, className }))}
+        <select
+          className={cn(selectVariants({ variant, size, className }))}
           ref={ref}
           {...props}
         />
@@ -48,5 +48,5 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   },
 );
 
-Input.displayName = "Input";
-export { Input, inputVariants };
+Select.displayName = "Select";
+export { Select, selectVariants };
