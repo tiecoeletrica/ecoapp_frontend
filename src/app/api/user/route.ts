@@ -4,9 +4,6 @@ import { db } from "../../../lib/db";
 
 import { hash } from "bcrypt";
 import * as z from "zod";
-
-// Define a schem for input validation
-
 const userSchema = z.object({
   username: z.string().min(1, "Username is required").max(100),
   email: z
@@ -64,7 +61,6 @@ export async function POST(req: Request) {
     });
 
     const { password: newUserPassword, ...rest } = newUser;
-
     return NextResponse.json({ user: rest, message: "User created" });
   } catch (error) {
     console.error("Erro ao criar usuário:", error);

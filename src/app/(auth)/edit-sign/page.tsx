@@ -1,9 +1,9 @@
-import SignUpForm from "@/components/form/SignUpForm";
+import EditInForm from "@/components/form/EditInForm";
 
 const page = () => {
   return (
     <div className="w-full">
-      <SignUpForm />
+      <EditInForm />
     </div>
   );
 };
