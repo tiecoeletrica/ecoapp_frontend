@@ -4,11 +4,10 @@ import { authOptions } from "../../../lib/auth";
 
 const page = async () => {
   const session = await getServerSession(authOptions);
-  if (session?.user.email) {
-    console.log(session?.user);
+  if (session?.user) {
     return (
       <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        Admin page - welcom back {session?.user.email}
+        Supervisor page - welcom back {session?.user.username}
       </h2>
     );
   }

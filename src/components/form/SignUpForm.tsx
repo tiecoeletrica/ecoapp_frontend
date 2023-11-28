@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../_ui/Button";
 import { Input } from "../_ui/Input";
-import { Select } from "../_ui/Select";
 import Logo from "../../../public/logo.svg";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,12 +19,12 @@ const createUserFormSchema = z.object({
     .refine((email) => {
       return email.endsWith("@ecoeletrica.com.br");
     }, "O email deve conter o dominio da Ecoelétrica"),
-  setor: z.string().min(2, "Escolha um setor"),
+  password: z.string().min(6, "Senha precisa conter no minimo 6 dígitos."),
 });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
-console.log(createUserFormSchema);
 
 const SignUpForm = () => {
+  const route = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,15 +32,28 @@ const SignUpForm = () => {
   } = useForm<createUserFormData>({
     resolver: zodResolver(createUserFormSchema),
   });
-
-  function createUser(data: object) {
-    alert("Pode buscar no banco de dados");
-    console.log(data);
-  }
+  const onSubmit = async (values: createUserFormData) => {
+    const response = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: values.name,
+        email: values.email,
+        password: values.password,
+      }),
+    });
+    if (response.ok) {
+      route.push("/sign-in");
+    } else {
+      console.log("Registro falhou");
+    }
+  };
 
   return (
     <form
-      onSubmit={handleSubmit(createUser)}
+      onSubmit={handleSubmit(onSubmit)}
       className="min-w-[490px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 bg-white"
     >
       <Image
@@ -69,25 +82,19 @@ const SignUpForm = () => {
         {errors.email && <span>{errors.email.message}</span>}
       </div>
       <div>
-        <Select title="Setor" {...register("setor")}>
-          <option value="" selected>
-            Escolha
-          </option>
-          <option value="RH">RH</option>
-          <option value="TI">TI</option>
-          <option value="SESMT">SESMT</option>
-          <option value="FINANCEIRO">FINANCEIRO</option>
-          <option value="GERÊNCIA">GERÊNCIA</option>
-          <option value="FROTA">FROTA</option>
-          <option value="PRODUÇÃO">PRODUÇÃO</option>
-        </Select>
-        {errors.setor && <span>{errors.setor.message}</span>}
+        <Input
+          title="Senha"
+          type="password"
+          {...register("password")}
+          placeholder="Digite a senha..."
+        />
+        {errors.password && <span>{errors.password.message}</span>}
       </div>
       <Button variant="solicitation" type="submit">
         Solicitar
       </Button>
       <Link
-        href={"/"}
+        href={"/sign-in"}
         className="flex justify-center mt-5 font-bold text-blue-dark outline-none"
       >
         Já tenho login cadastrado!

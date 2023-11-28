@@ -12,9 +12,6 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  pages: {
-    signIn: "/sign-in",
-  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -52,6 +49,9 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: "/sign-in",
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
