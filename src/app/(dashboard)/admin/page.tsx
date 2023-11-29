@@ -8,7 +8,7 @@ const page = async () => {
     console.log(session?.user);
     return (
       <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        Admin page - welcom back {session?.user.email}
+        Admin page d-d - welcom back {session?.user.email}
       </h2>
     );
   }
