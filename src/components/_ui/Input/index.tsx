@@ -5,7 +5,7 @@ import { cn } from "../../../lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const inputVariants = cva(
-  "flex items-center justify-between column border border-solid border-gray px-2 h-12 my-2 rounded outline-none",
+  "flex items-center justify-between column border border-solid border-gray px-2 h-12 my-2 rounded outline-none w-full",
   {
     variants: {
       variant: {
