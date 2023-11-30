@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "w-full bg-green-400 hover:bg-green-600 text-white",
-        destructive: "w-full bg-green-400 hover:bg-green-600 text-white",
+        destructive: "w-full bg-red hover:bg-red-600 text-white",
         solicitation: "w-full bg-blue-800 hover:bg-blue-dark-900 text-white",
       },
       size: {
