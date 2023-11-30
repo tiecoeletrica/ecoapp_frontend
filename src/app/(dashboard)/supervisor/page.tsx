@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 import { authOptions } from "../../../lib/auth";
 
@@ -12,11 +13,7 @@ const page = async () => {
     );
   }
 
-  return (
-    <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      Please login to see this admin page
-    </h2>
-  );
+  return redirect("/sign-in");
 };
 
 export default page;

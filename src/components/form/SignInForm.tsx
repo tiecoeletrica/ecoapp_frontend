@@ -35,7 +35,6 @@ const SignInForm = () => {
   });
 
   const onSubmit = async (values: createUserFormData) => {
-    console.log(values);
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
@@ -46,7 +45,7 @@ const SignInForm = () => {
       alert("Login não foi encontrado");
     } else {
       router.refresh();
-      router.push("/admin");
+      router.push("/");
     }
   };
 

@@ -57,7 +57,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         return {
           ...token,
-          username: user.name,
+          username: user.username,
         };
       }
       return token;
@@ -67,7 +67,7 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
-          username: token.name,
+          username: token.username,
         },
       };
     },
