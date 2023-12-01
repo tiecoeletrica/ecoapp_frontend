@@ -5,8 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import { Button } from "../_ui/Button";
-import { Input } from "../_ui/Input";
+import { Button } from "../../components/_ui/Button";
+import { Input } from "../../components/_ui/Input";
+
 import Logo from "../../../public/logo.svg";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -45,7 +46,7 @@ const SignInForm = () => {
       alert("Login não foi encontrado");
     } else {
       router.refresh();
-      router.push("/");
+      router.push("/dashboard/Admin");
     }
   };
 
@@ -62,6 +63,7 @@ const SignInForm = () => {
         alt="Logotipo da empresa EcoElétrica, contendo uma folha estilizada que se assemelha a um raio, com as cores azul e verde."
       />
       <div>
+        teste
         <Input
           type="email"
           title="E-mail"

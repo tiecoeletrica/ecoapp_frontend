@@ -1,7 +1,13 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaChevronCircleLeft, FaList } from "react-icons/fa";
+import {
+  FaChevronCircleLeft,
+  FaList,
+  FaClock,
+  FaUser,
+  FaClipboardList,
+} from "react-icons/fa";
 
 import OutForm from "@/components/form/OutForm";
 
@@ -11,64 +17,57 @@ const Menu = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
   return (
-    // <div>
-    //   <aside className="flex flex-col justify-between w-full">
-    //     <ul>
-    //       <li>
-    //         <Link href={"/"}>PROGRAMAÇÃO 1</Link>
-    //       </li>
-    //       <li>
-    //         <Link href={"/"}>PROGRAMAÇÃO 2</Link>
-    //       </li>
-    //       <li>
-    //         <Link href={"/"}>PROGRAMAÇÃO 3</Link>
-    //       </li>
-    //     </ul>
-    //   </aside>
-    // </div>
-    <aside className="max-w-[280px] flex flex-col justify-between w-full">
-      <div className="flex justify-between items-center p-4">
-        {isOpen ? <div className="w-1"></div> : ""}
+    <div className="h-screen text-center text-5xl w-auto">
+      <aside>
         {isOpen ? (
-          <FaChevronCircleLeft
-            className="cursor-pointer text-3xl "
-            onClick={toggleMenu}
-          />
-        ) : (
-          <FaList className="cursor-pointer text-3xl" onClick={toggleMenu} />
-        )}
-      </div>
-      <div
-        className="w-full h-screen hidden"
-        id="menu"
-        style={{ display: isOpen ? "block" : "none" }}
-      >
-        <div className="flex flex-col text-center">
-          <div className="bg-blue-dark-900 rounded-3xl w-20 h-20 flex justify-center mx-auto mb-5"></div>
-          <a className="text-center font-bold" href="/edit-sign">
-            Gerenciar
-          </a>
-        </div>
-        <div className="h-full flex flex-col justify-between">
-          <div className="flex flex-col justify-center h-full items-center p-6 gap-7 ">
-            <ul className="flex flex-col justify-between">
-              <li>
-                <Link href={"/"}>Programação 1</Link>
-              </li>
-              <li>
-                <Link href={"/"}>Programação 2</Link>
-              </li>
-              <li>
-                <Link href={"/"}>Programação 3</Link>
-              </li>
+          <div className="h-screen py-4 border-r border-r-blue-dark-900 px-4">
+            <div className="flex justify-end ">
+              <FaChevronCircleLeft
+                className="cursor-pointer text-3xl "
+                onClick={toggleMenu}
+              />
+            </div>
+            <div className="flex flex-col items-center justify-around">
+              <div className="flex flex-col items-center my-4">
+                <div className="bg-black rounded-3xl h-20 w-20 mb-2 bg-black-900 relative">
+                  <FaUser className="text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                </div>
+                <a
+                  className="text-lg cursor-pointer font-bold"
+                  href="/edit-sign"
+                >
+                  Gerenciar
+                </a>
+              </div>
+              <nav className="my-4">
+                <ul>
+                  <li className="flex items-center gap-2  text-xl my-4">
+                    <FaClock className="text-blue-dark-900" />
+                    <Link href={"/turns"}>Turnos</Link>
+                  </li>
+                  <li className="flex items-center gap-2  text-xl my-4">
+                    <FaClipboardList className="text-blue-dark-900" />
+                    <Link href={"/programing"}>Programação</Link>
+                  </li>
+                  <li className="flex items-center gap-2 text-xl my-4">
+                    <FaUser className="text-blue-dark-900" />
+                    <Link href={"/register"}>Cadastrar</Link>
+                  </li>
+                </ul>
+              </nav>
               <OutForm />
-            </ul>
+            </div>
           </div>
-        </div>
-      </div>
-    </aside>
+        ) : (
+          <div className="flex flex-col justify-between  h-screen p-4">
+            <FaList className="cursor-pointer text-2xl" onClick={toggleMenu} />
+
+            <OutForm />
+          </div>
+        )}
+      </aside>
+    </div>
   );
 };
 

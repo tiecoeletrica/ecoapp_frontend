@@ -1,11 +1,15 @@
 "use client";
 import { signOut } from "next-auth/react";
-
-import { Button } from "../_ui/Button";
+import { FaPowerOff } from "react-icons/fa";
 
 const OutForm = () => {
   return (
-    <Button onClick={() => signOut({ callbackUrl: "/sign-in" })}>Sair</Button>
+    <FaPowerOff
+      className="cursor-pointer text-2xl"
+      onClick={() => signOut({ callbackUrl: "/sign-in" })}
+    >
+      Sair
+    </FaPowerOff>
   );
 };
 
