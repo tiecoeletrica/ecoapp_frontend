@@ -35,7 +35,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, title, variant, size, ...props }, ref) => {
     return (
       <div className="flex flex-col">
-        <label className="block text-center text-blue-dark font-bold my-2 text-base">
+        <label className="block text-center text-blue-dark font-bold my-2 text-base w-full">
           {title}
         </label>
         <input

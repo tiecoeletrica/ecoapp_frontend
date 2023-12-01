@@ -63,7 +63,6 @@ const SignInForm = () => {
         alt="Logotipo da empresa EcoElétrica, contendo uma folha estilizada que se assemelha a um raio, com as cores azul e verde."
       />
       <div>
-        teste
         <Input
           type="email"
           title="E-mail"

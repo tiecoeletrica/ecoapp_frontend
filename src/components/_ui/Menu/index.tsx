@@ -44,15 +44,15 @@ const Menu = () => {
                 <ul>
                   <li className="flex items-center gap-2  text-xl my-4">
                     <FaClock className="text-blue-dark-900" />
-                    <Link href={"/turns"}>Turnos</Link>
+                    <Link href={"/dashboard/Turnos"}>Turnos</Link>
                   </li>
                   <li className="flex items-center gap-2  text-xl my-4">
                     <FaClipboardList className="text-blue-dark-900" />
-                    <Link href={"/programing"}>Programação</Link>
+                    <Link href={"/dashboard/Programing"}>Programação</Link>
                   </li>
                   <li className="flex items-center gap-2 text-xl my-4">
                     <FaUser className="text-blue-dark-900" />
-                    <Link href={"/register"}>Cadastrar</Link>
+                    <Link href={"/dashboard/Users"}>Cadastrar</Link>
                   </li>
                 </ul>
               </nav>
