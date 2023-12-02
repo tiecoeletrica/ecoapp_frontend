@@ -46,7 +46,7 @@ const SignInForm = () => {
       alert("Login não foi encontrado");
     } else {
       router.refresh();
-      router.push("/dashboard/Admin");
+      router.push("/");
     }
   };
 

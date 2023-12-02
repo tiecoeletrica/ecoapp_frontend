@@ -1,13 +1,10 @@
-import { FaPen } from "react-icons/fa";
-
-import { Button } from "@/components/_ui/Button";
-import Menu from "@/components/_ui/Menu";
-
 const users = () => {
   return (
-    <div className="h-screen bg-blue-200 grid grid-cols-6 grid-rows-6">
-      <Menu />
-      <div className=" text-blue-dark-900 text-center text-5xl col-span-5 row-span-6 p-10">
+    <div className="bg-blue-800 h-screen">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        Users
+      </div>
+      {/* <div className=" text-blue-dark-900 text-center text-5xl col-span-5 row-span-6 p-10">
         <div className="flex items-center justify-between mb-10">
           <h1>Listar usuários</h1>
           <div className="flex  gap-2">
@@ -61,7 +58,7 @@ const users = () => {
             </div>
           </div>
         </section>
-      </div>
+      </div> */}
     </div>
   );
 };
