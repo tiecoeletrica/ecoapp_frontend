@@ -46,7 +46,7 @@ const SignInForm = () => {
       alert("Login não foi encontrado");
     } else {
       router.refresh();
-      router.push("/");
+      router.push("/dashboard/indicadores");
     }
   };
 
@@ -84,7 +84,7 @@ const SignInForm = () => {
         Entrar
       </Button>
       <Link
-        href={"/sign-up"}
+        href={"auth/sign-up"}
         className="flex justify-center mt-5 font-bold text-blue-dark outline-none"
       >
         Solicitar acesso

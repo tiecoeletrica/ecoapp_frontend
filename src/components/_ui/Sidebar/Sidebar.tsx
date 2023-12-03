@@ -1,4 +1,6 @@
 "use client";
+
+// import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -14,6 +16,7 @@ import { IconType } from "react-icons/lib";
 
 import OutForm from "@/components/form/OutForm";
 
+// import { authOptions } from "@/lib/auth";
 import classNames from "classnames";
 
 type PropsMenuItems = {
@@ -24,15 +27,20 @@ type PropsMenuItems = {
 };
 
 const menuItems: PropsMenuItems[] = [
-  { id: "1", label: "Indicadores", icon: FaDatabase, link: "/" },
+  {
+    id: "1",
+    label: "Indicadores",
+    icon: FaDatabase,
+    link: "/dashboard/indicadores",
+  },
   {
     id: "2",
     label: "Programação",
     icon: FaCalendarAlt,
-    link: "programacao",
+    link: "/dashboard/programacao",
   },
-  { id: "3", label: "Turno", icon: FaClock, link: "turno" },
-  { id: "4", label: "Cadastrar", icon: FaUser, link: "users" },
+  { id: "3", label: "Turno", icon: FaClock, link: "/dashboard/turno" },
+  { id: "4", label: "Cadastrar", icon: FaUser, link: "/dashboard/users" },
 ];
 
 const Sidebar = () => {
@@ -65,7 +73,7 @@ const Sidebar = () => {
   };
   return (
     <>
-      {!(pathname === "/sign-in" || pathname === "/sign-up") && (
+      {!(pathname === "/auth/sign-in" || pathname === "/auth/sign-up") && (
         <div
           className={wrapperClasses}
           onMouseEnter={onMouseOver}

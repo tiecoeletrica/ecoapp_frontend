@@ -6,7 +6,7 @@ const OutForm = () => {
   return (
     <FaPowerOff
       className="cursor-pointer text-2xl"
-      onClick={() => signOut({ callbackUrl: "/sign-in" })}
+      onClick={() => signOut({ callbackUrl: "/auth/sign-in" })}
     >
       Sair
     </FaPowerOff>

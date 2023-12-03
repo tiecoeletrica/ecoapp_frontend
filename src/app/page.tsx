@@ -15,6 +15,6 @@ const Home = async () => {
     );
   }
 
-  return redirect("/sign-in");
+  return redirect("auth/sign-in");
 };
 export default Home;
