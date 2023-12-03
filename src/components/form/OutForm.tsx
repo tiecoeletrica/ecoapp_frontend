@@ -5,8 +5,8 @@ import { FaPowerOff } from "react-icons/fa";
 const OutForm = () => {
   return (
     <FaPowerOff
-      className="cursor-pointer text-2xl"
-      onClick={() => signOut({ callbackUrl: "/auth/sign-in" })}
+      className="cursor-pointer text-2xl mb-4"
+      onClick={() => signOut({ callbackUrl: "/sign-in" })}
     >
       Sair
     </FaPowerOff>

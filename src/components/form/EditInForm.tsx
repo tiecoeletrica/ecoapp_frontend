@@ -90,11 +90,6 @@ const EditInForm = () => {
         )}
       </div>
       <div className="flex justify-between gap-2">
-        <Button variant="destructive" type="button">
-          <a className="no-underline w-full" href="/dashboard/Admin">
-            Voltar
-          </a>
-        </Button>
         <Button variant="solicitation" type="submit">
           Alterar
         </Button>

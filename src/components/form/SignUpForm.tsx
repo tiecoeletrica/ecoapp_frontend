@@ -45,7 +45,7 @@ const SignUpForm = () => {
       }),
     });
     if (response.ok) {
-      route.push("/auth/sign-in");
+      route.push("/sign-in");
     } else {
       console.log("Registro falhou");
     }
@@ -94,7 +94,7 @@ const SignUpForm = () => {
         Solicitar
       </Button>
       <Link
-        href={"auth/sign-in"}
+        href={"/sign-in"}
         className="flex justify-center mt-5 font-bold text-blue-dark outline-none"
       >
         Já tenho login cadastrado!
