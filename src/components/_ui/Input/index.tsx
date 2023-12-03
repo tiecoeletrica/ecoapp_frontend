@@ -15,7 +15,7 @@ const inputVariants = cva(
       size: {
         default: "h-12 px-4 py-2",
         sm: "h-9 px-3 py-1",
-        lg: "h-12 px-6 py-3",
+        lg: "w-full h-12 px-6 py-3",
       },
     },
     defaultVariants: {
@@ -28,20 +28,39 @@ const inputVariants = cva(
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof inputVariants> {
-  inputSize?: string; // Renomeando para evitar conflito
+  inputSize?: string;
 }
+type Width<T> = "default" | "sm" | "lg" | T | null | undefined;
+
+const mapSizeToWidth = (size: Width<string>): string | undefined => {
+  switch (size) {
+    case "default":
+      return "auto";
+    case "full":
+      return "100%";
+    case "sm":
+      return "200px";
+    case "lg":
+      return "60%";
+    case null:
+    case undefined:
+      return undefined;
+    default:
+      return size;
+  }
+};
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, title, variant, size, ...props }, ref) => {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col" style={{ width: mapSizeToWidth(size) }}>
         <label className="block text-center text-blue-dark font-bold my-2 text-base w-full">
           {title}
         </label>
         <input
-          className={cn(inputVariants({ variant, size, className }))}
           ref={ref}
           {...props}
+          className={cn(inputVariants({ variant, className }))}
         />
       </div>
     );

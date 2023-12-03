@@ -1,9 +1,9 @@
+import SearchUsers from "@/components/form/SearchUsers";
+
 const users = () => {
   return (
-    <div className="bg-blue-800 h-screen">
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        Users
-      </div>
+    <div className=" h-screen p-4">
+      <SearchUsers />
       {/* <div className=" text-blue-dark-900 text-center text-5xl col-span-5 row-span-6 p-10">
         <div className="flex items-center justify-between mb-10">
           <h1>Listar usuários</h1>

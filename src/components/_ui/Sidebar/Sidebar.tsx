@@ -46,7 +46,6 @@ const menuItems: PropsMenuItems[] = [
 ];
 
 const Sidebar = () => {
-
   const [toggleCollapse, setToggleCollapse] = useState(false);
   const [isCollapsible, setIsCollapsible] = useState(false);
   const wrapperClasses = classNames(
@@ -57,7 +56,9 @@ const Sidebar = () => {
     },
   );
 
-  const collapseIconClasses = classNames("p-4 rounded absolute right-0");
+  const collapseIconClasses = classNames(
+    "w-full flex justify-center mx-auto rounded absolute right-0",
+  );
 
   const getNavItemClasses = () => {
     return classNames(
@@ -99,13 +100,17 @@ const Sidebar = () => {
               )}
             </button>
           </div>
-          <div className="flex flex-col gap-2 items-start mt-24">
+          <div className="flex flex-col gap-2 items-start mt-24 ">
             {menuItems.map(({ icon: Icon, ...menu }) => {
               const classes = getNavItemClasses();
               return (
-                <Link href={menu.link} key={menu.id}>
+                <Link
+                  className="hover:bg-gray-300 rounded w-full transition duration-300	hover:text-white"
+                  href={menu.link}
+                  key={menu.id}
+                >
                   <div className={classes}>
-                    <div className="flex gap-2 py-4 px-3 items-center w-full h-full ">
+                    <div className="flex gap-2 py-4 px-3 items-center w-full h-full">
                       <div style={{ width: "2rem" }}>
                         <Icon className="cursor-pointer text-2xl" />
                       </div>
@@ -117,7 +122,7 @@ const Sidebar = () => {
             })}
           </div>
         </div>
-        <div className="text-3xl flex mx-auto pb-4 ">
+        <div className="text-3xl flex  mx-auto pb-4 ">
           <OutForm />
         </div>
       </div>
