@@ -1,10 +1,11 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-// Forma para referenciar onde é minha tela de login
 
+// Forma para referenciar onde é minha tela de login
 import { db } from "./db";
 
+import axios from "axios";
 import { compare } from "bcrypt";
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -19,33 +20,34 @@ export const authOptions: NextAuthOptions = {
         email: { label: "email", type: "text" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
+        const response = await axios.post(
+          "http://localhost:3000/autenticacao",
+          {
+            email: credentials?.email,
+            senha: credentials?.password,
+          },
+        );
+
+        const resposta = await response.data.colaborador;
+
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-
-        const existingUser = await db.user.findUnique({
-          where: { email: credentials?.email },
-        });
-
-        if (!existingUser) {
+        if (!resposta) {
           return null;
         }
-
         const passwordMatch = await compare(
           credentials.password,
-          existingUser.password,
+          resposta.senha,
         );
-
         if (!passwordMatch) {
           return null;
         }
-
-        return {
-          id: `${existingUser.id}`,
-          username: existingUser.username,
-          email: existingUser.email,
-        };
+        // console.log(resposta);
+        console.log(resposta);
+        return resposta;
       },
     }),
   ],
@@ -54,15 +56,21 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
+      console.log(token);
+      console.log(user);
+      console.log(user);
       if (user) {
+        console.log("oi");
         return {
           ...token,
           username: user.username,
         };
       }
+      console.log(token);
       return token;
     },
     async session({ session, token }) {
+      console.log(token);
       return {
         ...session,
         user: {

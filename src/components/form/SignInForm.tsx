@@ -21,7 +21,7 @@ const createUserFormSchema = z.object({
     .refine((email) => {
       return email.endsWith("@ecoeletrica.com.br");
     }, "O email deve conter o domínio da Ecoelétrica"),
-  password: z.string().min(6, "A senha precisa conter no minimo 6 caracteres"),
+  password: z.string().min(3, "A senha precisa conter no minimo 6 caracteres"),
 });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 

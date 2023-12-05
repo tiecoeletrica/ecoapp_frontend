@@ -12,9 +12,14 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
   username  String   @unique
+  email     String   @unique
+  cpf       String   @unique
+  tipo      String  
   password  String
   createdAt DateTime @default(now())
   updateUt  DateTime @updatedAt
+  status    Int
+  @@map("user")
 }
+

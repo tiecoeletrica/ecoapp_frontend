@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const hashedPassword = await hash(password, 10); // Use bcrypt para criar um hash seguro da senha
+    const hashedPassword = await hash(password, 8); // Use bcrypt para criar um hash seguro da senha
 
     const newUser = await db.user.create({
       data: {
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     const { password: newUserPassword, ...rest } = newUser;
     return NextResponse.json({ user: rest, message: "User created" });
   } catch (error) {
-    console.error("Erro ao criar usuário:", error);
+    // console.error("Erro ao criar usuário:", error);
     return NextResponse.json(
       {
         user: null,

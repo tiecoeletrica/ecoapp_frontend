@@ -4,11 +4,8 @@ export default function middleware(request: NextRequest) {
   const token = request.cookies.get("next-auth.session-token")?.value;
   const signInUrl = new URL("/", request.url);
   const dashboardURL = new URL("/admin", request.url);
-  console.log(signInUrl);
-  console.log(request.url);
 
   if (!token) {
-    console.log(request.nextUrl.pathname);
     if (request.nextUrl.pathname === "/") {
       return NextResponse.next();
     }
