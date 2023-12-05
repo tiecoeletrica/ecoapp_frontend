@@ -1,8 +1,4 @@
 "use client";
-
-// import { getServerSession } from "next-auth";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   FaAngleLeft,
@@ -17,37 +13,66 @@ import { IconType } from "react-icons/lib";
 
 import OutForm from "@/components/form/OutForm";
 
-// import { authOptions } from "@/lib/auth";
+// const menuItems: PropsMenuItems[] = [
+//   { id: "3", label: "Turno", icon: FaClock, link: "/admin/turno" },
+//   { id: "4", label: "Cadastrar", icon: FaUser, link: "/admin/users" },
+//   { id: "5", label: "Editar", icon: FaPen, link: "/admin/edit-sign" },
+// ];
+
 import ActiveLink from "../ActiveLink";
 
 import classNames from "classnames";
 
-type PropsMenuItems = {
-  id: string;
+interface MenuItem {
+  id: number;
   label: string;
   icon: IconType;
   link: string;
-};
+}
 
-const menuItems: PropsMenuItems[] = [
-  {
-    id: "1",
-    label: "Indicadores",
-    icon: FaDatabase,
-    link: "/admin",
-  },
-  {
-    id: "2",
-    label: "Programação",
-    icon: FaCalendarAlt,
-    link: "/admin/programacao",
-  },
-  { id: "3", label: "Turno", icon: FaClock, link: "/admin/turno" },
-  { id: "4", label: "Cadastrar", icon: FaUser, link: "/admin/users" },
-  { id: "5", label: "Editar", icon: FaPen, link: "/admin/edit-sign" },
-];
+interface MenuItems {
+  [key: string]: MenuItem[];
+}
 
-const Sidebar = () => {
+interface SidebarProps {
+  typeAcess: string;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ typeAcess }: SidebarProps) => {
+  const menuItems: MenuItems = {
+    ADM: [
+      {
+        id: 1,
+        label: "Indicadores",
+        icon: FaDatabase,
+        link: "/admin",
+      },
+      {
+        id: 2,
+        label: "Programação",
+        icon: FaCalendarAlt,
+        link: "/admin/programacao",
+      },
+      { id: 3, label: "Turno", icon: FaClock, link: "/admin/turno" },
+      { id: 4, label: "Cadastrar", icon: FaUser, link: "/admin/users" },
+      { id: 5, label: "Editar", icon: FaPen, link: "/admin/edit-sign" },
+    ],
+    CAMPO: [
+      {
+        id: 1,
+        label: "Indicadores",
+        icon: FaDatabase,
+        link: "/admin",
+      },
+      {
+        id: 2,
+        label: "Programação",
+        icon: FaCalendarAlt,
+        link: "/admin/programacao",
+      },
+    ],
+  };
+
   const [toggleCollapse, setToggleCollapse] = useState(false);
   const [isCollapsible, setIsCollapsible] = useState(false);
   const wrapperClasses = classNames(
@@ -103,7 +128,7 @@ const Sidebar = () => {
             </button>
           </div>
           <div className="flex flex-col gap-2 items-start mt-24 ">
-            {menuItems.map(({ icon: Icon, ...menu }) => {
+            {menuItems[typeAcess].map(({ icon: Icon, ...menu }) => {
               const classes = getNavItemClasses();
               return (
                 <ActiveLink href={menu.link} key={menu.id}>

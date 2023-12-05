@@ -90,7 +90,7 @@ const SignUpForm = () => {
         />
         {errors.password && <span>{errors.password.message}</span>}
       </div>
-      <Button variant="solicitation" type="submit">
+      <Button size="full" variant="solicitation" type="submit">
         Solicitar
       </Button>
       <Link

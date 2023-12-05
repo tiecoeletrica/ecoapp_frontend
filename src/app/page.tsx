@@ -5,12 +5,11 @@ import { authOptions } from "../lib/auth";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session?.token);
   if (session?.user) {
     return (
       <div className="bg-blue-800 h-screen">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          Indicadores
+          Home
         </div>
       </div>
     );

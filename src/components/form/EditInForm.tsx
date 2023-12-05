@@ -90,7 +90,7 @@ const EditInForm = () => {
         )}
       </div>
       <div className="flex justify-between gap-2">
-        <Button variant="solicitation" type="submit">
+        <Button size="full" variant="solicitation" type="submit">
           Alterar
         </Button>
       </div>

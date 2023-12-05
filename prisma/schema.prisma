@@ -15,11 +15,11 @@ model User {
   username  String   @unique
   email     String   @unique
   cpf       String   @unique
-  tipo      String  
+  tipo      String
   password  String
   createdAt DateTime @default(now())
   updateUt  DateTime @updatedAt
   status    Int
-  @@map("user")
-}
 
+  @@map("colaborador")
+}

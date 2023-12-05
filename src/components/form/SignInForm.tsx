@@ -80,7 +80,7 @@ const SignInForm = () => {
         />
         {errors.password && <span>{errors.password.message}</span>}
       </div>
-      <Button variant="default" type="submit">
+      <Button size="full" variant="default" type="submit">
         Entrar
       </Button>
       <Link

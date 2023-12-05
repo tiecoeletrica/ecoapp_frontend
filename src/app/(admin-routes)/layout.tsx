@@ -10,15 +10,24 @@ interface PrivateLayoutProps {
   children: ReactNode;
 }
 
+interface Token {
+  id: number;
+  nome: string;
+  cpf: number;
+  email: string;
+  equipe_id: string;
+  tipo: string;
+  status: string;
+}
 export default async function PrivateLayout({ children }: PrivateLayoutProps) {
-  const session = await getServerSession(authOptions);
+  const session: Token | null = await getServerSession(authOptions);
   if (!session) {
     redirect("/");
   }
 
   return (
     <div className="h-screen flex flex-row justify-start">
-      <Sidebar />
+      <Sidebar typeAcess={session?.tipo} />
       <div className="flex-1">{children}</div>
     </div>
   );
