@@ -1,7 +1,7 @@
 "use client";
 
 // import { getServerSession } from "next-auth";
-import Link from "next/link";
+// import Link from "next/link";
 // import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
@@ -18,6 +18,8 @@ import { IconType } from "react-icons/lib";
 import OutForm from "@/components/form/OutForm";
 
 // import { authOptions } from "@/lib/auth";
+import ActiveLink from "../ActiveLink";
+
 import classNames from "classnames";
 
 type PropsMenuItems = {
@@ -104,11 +106,7 @@ const Sidebar = () => {
             {menuItems.map(({ icon: Icon, ...menu }) => {
               const classes = getNavItemClasses();
               return (
-                <Link
-                  className="hover:bg-gray-300 rounded w-full transition duration-300	hover:text-white"
-                  href={menu.link}
-                  key={menu.id}
-                >
+                <ActiveLink href={menu.link} key={menu.id}>
                   <div className={classes}>
                     <div className="flex gap-2 py-4 px-3 items-center w-full h-full">
                       <div style={{ width: "2rem" }}>
@@ -117,7 +115,7 @@ const Sidebar = () => {
                       {!toggleCollapse && <span>{menu.label}</span>}
                     </div>
                   </div>
-                </Link>
+                </ActiveLink>
               );
             })}
           </div>
