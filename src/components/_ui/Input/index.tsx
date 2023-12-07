@@ -30,7 +30,7 @@ export interface InputProps
     VariantProps<typeof inputVariants> {
   inputSize?: string;
 }
-type Width<T> = "default" | "sm" | "lg" | T | null | undefined;
+type Width<T> = "default" | "sm" | "lg" | "medium" | T | null | undefined;
 
 const mapSizeToWidth = (size: Width<string>): string | undefined => {
   switch (size) {
@@ -40,6 +40,8 @@ const mapSizeToWidth = (size: Width<string>): string | undefined => {
       return "100%";
     case "sm":
       return "200px";
+    case "medium":
+      return "50%";
     case "lg":
       return "60%";
     case null:

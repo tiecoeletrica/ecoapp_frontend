@@ -35,7 +35,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, title, variant, size, ...props }, ref) => {
     return (
       <div className="flex flex-col">
-        <label className="block text-center text-blue-dark font-bold my-2 text-base">
+        <label className="block text-center text-blue-dark font-bold my-1 text-base">
           {title}
         </label>
         <select
