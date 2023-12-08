@@ -25,23 +25,37 @@ const Turn = ({
   situacao,
 }: TurnProps) => {
   return (
-    <div>
-      <div className="flex items-center justify-between border-b border-l border-r p-4 w-full">
-        <div className="min-w-full[10] text-center">
-          <a href={cod}>{cod}</a>
-        </div>
-        <div className="min-w-full[10] text-center">{processo}</div>
-        <div className="min-w-full[10] text-center">{contrato}</div>
-        <div className="min-w-full[10] text-center">{coordenador}</div>
-        <div className="min-w-full[10] text-center">{supervisor}</div>
-        <div className="min-w-full[10] text-center">{responsavel}</div>
-        <div className="min-w-full[10] text-center">{placa}</div>
-        <div className="min-w-full[10] text-center">{data_inicial}</div>
-        <div className="min-w-full[10] text-center">{data_final}</div>
-        <div className="min-w-full[10] text-center">{situacao}</div>
-        <div className="min-w-full[10] text-center">
-          <FaPen />
-        </div>
+    <div className="flex items-center justify-between border-b border-l border-r w-full">
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        <a href={cod}>{cod}</a>
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        {processo}
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        {contrato}
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        {coordenador}
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        {supervisor}
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        {responsavel}
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">{placa}</div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        {data_inicial}
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        {data_final}
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        {situacao}
+      </div>
+      <div className="min-w-[10%] max-w-[10%] w-full text-center">
+        <FaPen />
       </div>
     </div>
   );

@@ -5,12 +5,13 @@ import { cn } from "../../../lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const inputVariants = cva(
-  "flex items-center justify-between column border border-solid border-gray px-2 h-12 mt-2 rounded outline-none w-full",
+  "flex items-center justify-between column border border-solid border-gray px-2 h-12  rounded outline-none w-full",
   {
     variants: {
       variant: {
+        // px-2 h-12 my-2
         default:
-          "flex items-center justify-between column border border-solid border-gray px-2 h-12 my-2 rounded",
+          "flex items-center justify-between column border border-solid border-gray rounded",
       },
       size: {
         default: "h-12 px-4 py-2",
@@ -56,7 +57,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, title, variant, size, ...props }, ref) => {
     return (
       <div className="flex flex-col" style={{ width: mapSizeToWidth(size) }}>
-        <label className="block text-center text-blue-dark font-bold my-2 text-base w-full">
+        <label className="block text-center text-blue-dark font-bold text-base w-full">
           {title}
         </label>
         <input

@@ -1,7 +1,4 @@
 "use client";
-
-// import Image from "next/image";
-// import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../_ui/Button";
@@ -29,7 +26,15 @@ const createUserFormSchema = z.object({
 });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
-const EditInForm = () => {
+interface Token {
+  nome: string;
+  cpf: number;
+  email: string;
+  equipe_id: string;
+  tipo: string;
+  status: string;
+}
+const EditInForm = ({ nome, email }: Token) => {
   const {
     register,
     handleSubmit,
@@ -57,6 +62,8 @@ const EditInForm = () => {
           title="Nome"
           {...register("nome")}
           placeholder="Digite o seu nome..."
+          disabled
+          value={nome}
         />
         {errors.nome && <span>{errors.nome.message}</span>}
       </div>
@@ -66,6 +73,8 @@ const EditInForm = () => {
           type="email"
           {...register("email")}
           placeholder="Digite o email coorporativo..."
+          disabled
+          value={email}
         />
         {errors.email && <span>{errors.email.message}</span>}
       </div>

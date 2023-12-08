@@ -13,12 +13,6 @@ import { IconType } from "react-icons/lib";
 
 import OutForm from "@/components/form/OutForm";
 
-// const menuItems: PropsMenuItems[] = [
-//   { id: "3", label: "Turno", icon: FaClock, link: "/admin/turno" },
-//   { id: "4", label: "Cadastrar", icon: FaUser, link: "/admin/users" },
-//   { id: "5", label: "Editar", icon: FaPen, link: "/admin/edit-sign" },
-// ];
-
 import ActiveLink from "../ActiveLink";
 
 import classNames from "classnames";
@@ -54,7 +48,12 @@ const Sidebar: React.FC<SidebarProps> = ({ typeAcess }: SidebarProps) => {
         link: "/admin/programacao",
       },
       { id: 3, label: "Turno", icon: FaClock, link: "/admin/turno" },
-      { id: 4, label: "Cadastrar", icon: FaUser, link: "/admin/users" },
+      {
+        id: 4,
+        label: "Cadastrar",
+        icon: FaUser,
+        link: "/admin/users/usuarios",
+      },
       { id: 5, label: "Editar", icon: FaPen, link: "/admin/edit-sign" },
     ],
     CAMPO: [

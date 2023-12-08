@@ -79,12 +79,8 @@ const response = [
   },
 ];
 const SearchTurn = () => {
-  const onSubmit = () => {
-    alert("Pokemon");
-  };
-
   return (
-    <div className="w-full gap-2">
+    <div className="max-w-6xl w-full mx-auto gap-2">
       <form className="flex flex-wrap justify-between items-end">
         <Input
           size={"lg"}
@@ -100,40 +96,44 @@ const SearchTurn = () => {
           size="default"
           type="button"
           variant="default"
-          onSubmit={onSubmit}
           className="mb-10"
         >
           <FaSearch />
         </Button>
       </form>
-      <div className="flex items-center border p-4 rounded-t w-full mt-10">
-        <div className="min-w-full[10%] w-full[10%] text-center">
+      <div className="flex items-center justify-between border-b border-l border-r p-4 w-full">
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
           <a>Cód. Turno</a>
         </div>
-        <div className="min-w-full[10%] w-full[10%] text-center">Processo</div>
-        <div className="min-w-full[10%] w-full[10%] text-center">Contratos</div>
-        <div className="min-w-full[10%] w-full[10%] text-center">
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
+          Processo
+        </div>
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
+          Contratos
+        </div>
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
           Coordenador
         </div>
-        <div className="min-w-full[10%] w-full[10%] text-center">
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
           Supervisor
         </div>
-        <div className="min-w-full[10%] w-full[10%] text-center">
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
           Reponsável
         </div>
-        <div className="min-w-full[10%] w-full[10%] text-center">Placa</div>
-        <div className="min-w-full[10%] w-full[10%] text-center">
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">Placa</div>
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
           Data inicial
         </div>
-        <div className="min-w-full[10%] w-full[10%] text-center">
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
           Data final
         </div>
-        <div className="min-w-full[10%] w-full[10%] text-center">Situação</div>
-        <div className="min-w-full[10%] w-full[10%] text-center">
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
+          Situação
+        </div>
+        <div className="min-w-[10%] max-w-[10%] w-full text-center">
           <FaPen />
         </div>
       </div>
-
       {response.map((item) => {
         return (
           <Turn
