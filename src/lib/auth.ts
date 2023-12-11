@@ -25,6 +25,7 @@ interface Token {
       tipo: string;
       status: string;
     };
+    token: string;
   };
 }
 
@@ -44,7 +45,7 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
         const response = await axios.post(
-          "http://192.168.0.66:3000/autenticacao",
+          "https://backend-api-ej9i.onrender.com/autenticacao",
           {
             email: credentials?.email,
             senha: credentials?.password,
@@ -68,7 +69,10 @@ export const authOptions: NextAuthOptions = {
       token: Token;
     }) {
       if (token) {
-        return token.username.colaborador;
+        return {
+          user: token.username.colaborador,
+          tokenUser: token.username.token,
+        };
       }
 
       return session;
@@ -84,27 +88,3 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
-
-// return {
-//   ...session,
-//   user: {
-//     ...session.user,
-//     username: token.username.colaborador,
-//   },
-// };
-// const user = await response.data;
-
-// if (!credentials?.email || !credentials?.password) {
-//   return null;
-// }
-// if (!user) {
-//   return null;
-// }
-
-// console.log(user);
-// console.log(credentials.password);
-// const teste = bycrypt.hash(credentials.password, 8);
-// const passwordMatch = await compare(teste, user.token);
-// if (!passwordMatch) {
-//   return null;
-// }

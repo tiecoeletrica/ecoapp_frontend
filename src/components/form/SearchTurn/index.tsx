@@ -4,81 +4,20 @@ import { FaPen, FaSearch } from "react-icons/fa";
 import { Button } from "@/components/_ui/Button";
 import { Input } from "@/components/_ui/Input";
 import Turn from "@/components/_ui/Turn";
-const response = [
-  {
-    cod: "123123132",
-    processo: "12312313",
-    contrato: "CELPE",
-    coordenador: " Joao",
-    supervisor: "Joazin",
-    responsavel: "Joaozao",
-    placa: "RPA2J17",
-    data_inicial: "11/06/2023",
-    data_final: "11/09/2023",
-    situacao: "Concluida",
-  },
-  {
-    cod: "123123132",
-    processo: "12312313",
-    contrato: "CELPE",
-    coordenador: " Joao",
-    supervisor: "Joazin",
-    responsavel: "Joaozao",
-    placa: "RPA2J17",
-    data_inicial: "11/06/2023",
-    data_final: "11/09/2023",
-    situacao: "Concluida",
-  },
-  {
-    cod: "123123132",
-    processo: "12312313",
-    contrato: "CELPE",
-    coordenador: " Joao",
-    supervisor: "Joazin",
-    responsavel: "Joaozao",
-    placa: "RPA2J17",
-    data_inicial: "11/06/2023",
-    data_final: "11/09/2023",
-    situacao: "Concluida",
-  },
-  {
-    cod: "123123132",
-    processo: "12312313",
-    contrato: "CELPE",
-    coordenador: " Joao",
-    supervisor: "Joazin",
-    responsavel: "Joaozao",
-    placa: "RPA2J17",
-    data_inicial: "11/06/2023",
-    data_final: "11/09/2023",
-    situacao: "Concluida",
-  },
-  {
-    cod: "123123132",
-    processo: "12312313",
-    contrato: "CELPE",
-    coordenador: " Joao",
-    supervisor: "Joazin",
-    responsavel: "Joaozao",
-    placa: "RPA2J17",
-    data_inicial: "11/06/2023",
-    data_final: "11/09/2023",
-    situacao: "Concluida",
-  },
-  {
-    cod: "123123132",
-    processo: "12312313",
-    contrato: "CELPE",
-    coordenador: " Joao",
-    supervisor: "Joazin",
-    responsavel: "Joaozao",
-    placa: "RPA2J17",
-    data_inicial: "11/06/2023",
-    data_final: "11/09/2023",
-    situacao: "Concluida",
-  },
-];
-const SearchTurn = () => {
+
+interface PropsResponse {
+  id: number;
+  equipe_id: number;
+  equipe: string;
+  nome: string;
+  data: string;
+  placa: string;
+}
+interface SearchUsersProps {
+  response: PropsResponse[];
+}
+
+const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
   return (
     <div className="max-w-6xl w-full mx-auto gap-2">
       <form className="flex flex-wrap justify-between items-end">
@@ -134,22 +73,8 @@ const SearchTurn = () => {
           <FaPen />
         </div>
       </div>
-      {response.map((item) => {
-        return (
-          <Turn
-            key={item.cod}
-            cod={item.cod}
-            processo={item.processo}
-            contrato={item.contrato}
-            coordenador={item.coordenador}
-            supervisor={item.supervisor}
-            responsavel={item.responsavel}
-            placa={item.placa}
-            data_inicial={item.data_inicial}
-            data_final={item.data_final}
-            situacao={item.situacao}
-          />
-        );
+      {response.map((item, index) => {
+        return <Turn key={index} />;
       })}
     </div>
   );

@@ -14,6 +14,7 @@ declare module NextAuth {
     token: {
       username: string;
       colaborador: string;
+      token: string;
     };
   }
 }

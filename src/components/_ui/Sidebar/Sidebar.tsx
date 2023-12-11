@@ -31,8 +31,8 @@ interface MenuItems {
 interface SidebarProps {
   typeAcess: string;
 }
-
-const Sidebar: React.FC<SidebarProps> = ({ typeAcess }: SidebarProps) => {
+// { typeAcess }: SidebarProps
+const Sidebar: React.FC<SidebarProps> = () => {
   const menuItems: MenuItems = {
     ADM: [
       {
@@ -127,7 +127,7 @@ const Sidebar: React.FC<SidebarProps> = ({ typeAcess }: SidebarProps) => {
             </button>
           </div>
           <div className="flex flex-col gap-2 items-start mt-24 ">
-            {menuItems[typeAcess].map(({ icon: Icon, ...menu }) => {
+            {menuItems.ADM.map(({ icon: Icon, ...menu }) => {
               const classes = getNavItemClasses();
               return (
                 <ActiveLink href={menu.link} key={menu.id}>
