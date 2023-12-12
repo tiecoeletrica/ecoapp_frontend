@@ -1,9 +1,7 @@
 import { FaPen } from "react-icons/fa";
 
 interface TurnProps {
-  id: number;
   equipe_id: number;
-  equipe: string;
   nome: string;
   data: string;
   placa: string;
