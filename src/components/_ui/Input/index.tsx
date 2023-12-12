@@ -9,7 +9,6 @@ const inputVariants = cva(
   {
     variants: {
       variant: {
-        // px-2 h-12 my-2
         default:
           "flex items-center justify-between column border border-solid border-gray rounded",
       },
@@ -56,8 +55,8 @@ const mapSizeToWidth = (size: Width<string>): string | undefined => {
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, title, variant, size, ...props }, ref) => {
     return (
-      <div className="flex flex-col" style={{ width: mapSizeToWidth(size) }}>
-        <label className="block text-center text-blue-dark font-bold text-base w-full">
+      <div className="flex flex-col max-w-[600px] w-full" style={{ width: mapSizeToWidth(size) }}>
+        <label className="block text-center text-blue-dark font-bold text-base">
           {title}
         </label>
         <input

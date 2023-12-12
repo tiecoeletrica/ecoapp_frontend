@@ -19,8 +19,7 @@ interface SearchUsersProps {
 }
 
 const SearchUsers: React.FC<SearchUsersProps> = ({ response }) => {
-  console.log(response);
-  const [originalList, setOriginalList] = useState<PropsResponse[]>(response);
+  const [originalList] = useState<PropsResponse[]>(response);
 
   const [filteredUsers, setFilteredUsers] =
     useState<PropsResponse[]>(originalList);
@@ -50,6 +49,8 @@ const SearchUsers: React.FC<SearchUsersProps> = ({ response }) => {
     }
   };
 
+  console.log(filteredUsers);
+
   return (
     <div className="container mx-auto px-4">
       <div className="flex justify-between items-center mb-10">
@@ -67,72 +68,80 @@ const SearchUsers: React.FC<SearchUsersProps> = ({ response }) => {
           </Select>
         </div>
       </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto rounded">
-          <thead className="bg-green-900 text-white ">
-            <tr className="border">
-              <th className="border py-1 text-center">ID</th>
-              <th className="border py-1 text-center">CPF</th>
-              <th className="border py-1 text-center">Nome</th>
-              <th className="border py-1 text-center">Email</th>
-              <th className="border py-1 text-center">Tipo</th>
-              <th className="border py-1 text-center">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((d) => (
-              <tr key={d.id}>
-                <td className="border py-1 text-center">{d.id}</td>
-                <td className="border  py-1 text-center">{d.cpf}</td>
-                <td className="border  py-1 text-center">{d.nome}</td>
-                <td className="border  py-1 text-center">{d.email}</td>
-                <td className="border  py-1 text-center">{d.tipo}</td>
-                <td className="border  py-1 text-center">
-                  <FaPen className="mx-auto" />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="flex justify-end items-center my-4">
-        <button
-          onClick={goToPreviousPage}
-          className={`px-3 py-1 mx-1 ${
-            currentPage === 1
-              ? "cursor-not-allowed text-gray-500"
-              : "bg-blue-500 text-white"
-          }`}
-        >
-          <FaAngleLeft />
-        </button>
-        {Array.from({ length: pageCount }, (_, index) => index + 1).map(
-          (number) => (
+      {currentItems.length ? (
+        <div>
+          {" "}
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto rounded">
+              <thead className="bg-green-900 text-white ">
+                <tr className="border">
+                  <th className="border py-1 text-center">ID</th>
+                  <th className="border py-1 text-center">CPF</th>
+                  <th className="border py-1 text-center">Nome</th>
+                  <th className="border py-1 text-center">Email</th>
+                  <th className="border py-1 text-center">Tipo</th>
+                  <th className="border py-1 text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentItems.map((d) => (
+                  <tr key={d.id}>
+                    <td className="border py-1 text-center">{d.id}</td>
+                    <td className="border  py-1 text-center">{d.cpf}</td>
+                    <td className="border  py-1 text-center">{d.nome}</td>
+                    <td className="border  py-1 text-center">{d.email}</td>
+                    <td className="border  py-1 text-center">{d.tipo}</td>
+                    <td className="border  py-1 text-center">
+                      <FaPen className="mx-auto" />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="flex justify-end items-center my-4">
             <button
-              key={number}
-              onClick={() => setCurrentPage(number)}
+              onClick={goToPreviousPage}
               className={`px-3 py-1 mx-1 ${
-                currentPage === number
-                  ? "bg-gray-300 text-white hover:bg-gray-300 rounded"
+                currentPage === 1
+                  ? "cursor-not-allowed text-gray-500"
+                  : "bg-blue-500 text-white"
+              }`}
+            >
+              <FaAngleLeft />
+            </button>
+            {Array.from({ length: pageCount }, (_, index) => index + 1).map(
+              (number) => (
+                <button
+                  key={number}
+                  onClick={() => setCurrentPage(number)}
+                  className={`px-3 py-1 mx-1 ${
+                    currentPage === number
+                      ? "bg-gray-300 text-white hover:bg-gray-300 rounded"
+                      : "bg-blue-500 text-gray-500"
+                  }`}
+                >
+                  {number}
+                </button>
+              ),
+            )}
+            <button
+              onClick={goToNextPage}
+              className={`px-3 py-1 mx-1 ${
+                currentPage === pageCount
+                  ? "cursor-not-allowed text-gray-500"
                   : "bg-blue-500 text-gray-500"
               }`}
             >
-              {number}
+              <FaAngleRight />
             </button>
-          ),
-        )}
-        <button
-          onClick={goToNextPage}
-          className={`px-3 py-1 mx-1 ${
-            currentPage === pageCount
-              ? "cursor-not-allowed text-gray-500"
-              : "bg-blue-500 text-gray-500"
-          }`}
-        >
-          <FaAngleRight />
-        </button>
-      </div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center font-bold">
+          Não há dados para essa pesquisa...
+        </div>
+      )}
     </div>
   );
 };
