@@ -30,7 +30,6 @@ const turno = async () => {
     },
   });
   const data = response.data;
-  console.log(data);
   return (
     <div className="h-screen p-4">
       <SearchTurn response={data} />

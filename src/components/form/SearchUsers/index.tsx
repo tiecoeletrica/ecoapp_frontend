@@ -61,7 +61,7 @@ const SearchUsers: React.FC<SearchUsersProps> = ({ response, token }) => {
   // console.log(filteredUsers);
 
   return (
-    <div className="container mx-auto">
+    <div className="w-full mx-auto px-4">
       <div className="flex justify-between items-center mb-10">
         <div>
           <h1 className="font-bold text-3xl">Lista de usuários</h1>
@@ -80,32 +80,27 @@ const SearchUsers: React.FC<SearchUsersProps> = ({ response, token }) => {
       </div>
       {currentItems.length ? (
         <div>
-          {" "}
           <div className="overflow-x-auto">
-            <table className="min-w-full table-auto rounded">
-              <thead className="bg-green-900 text-white ">
-                <tr className="border">
-                  <th className="border py-1 text-center  max-w-[20px]">ID</th>
-                  <th className="border py-1 text-center">CPF</th>
-                  <th className="border py-1 text-center">Nome</th>
-                  <th className="border py-1 text-center">Email</th>
-                  <th className="border py-1 text-center">Tipo</th>
-                  <th className="border py-1 text-center  max-w-[30px]">
-                    Ações
-                  </th>
+            <table className="min-w-full table-auto rounded overflow-x">
+              <thead>
+                <tr className="border-b">
+                  <th className="border-b text-center">ID</th>
+                  <th className="border-b text-center">CPF</th>
+                  <th className="border-b text-center">Nome</th>
+                  <th className="border-b text-center">Email</th>
+                  <th className="border-b text-center">Tipo</th>
+                  <th className="border-b text-center">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((d) => (
-                  <tr key={d.id}>
-                    <td className="border py-1 text-center  max-w-[20px]">
-                      {d.id}
-                    </td>
-                    <td className="border  py-1 text-center">{d.cpf}</td>
-                    <td className="border  py-1 text-center">{d.nome}</td>
-                    <td className="border  py-1 text-center">{d.email}</td>
-                    <td className="border  py-1 text-center">{d.tipo}</td>
-                    <td className="border  py-1 text-center  max-w-[30px]">
+                  <tr key={d.id} className="cursor-pointer hover:bg-gray-200">
+                    <td className="border-b py-2 text-center">{d.id}</td>
+                    <td className="border-b py-2 text-center">{d.cpf}</td>
+                    <td className="border-b py-2 text-center">{d.nome}</td>
+                    <td className="border-b py-2 text-center">{d.email}</td>
+                    <td className="border-b py-2 text-center">{d.tipo}</td>
+                    <td className="border-b py-2 text-center">
                       <FaPen
                         className="mx-auto cursor-pointer"
                         onClick={() => handlePageUser(d)}

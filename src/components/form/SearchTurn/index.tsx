@@ -36,19 +36,18 @@ const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
     setCurrentPage((page) => (page > 1 ? page - 1 : page));
 
   return (
-    <div className="container mx-auto px-4">
-      <form className="flex flex-wrap justify-between items-end mb-10">
+    <div className="w-full mx-auto px-4">
+      <form className="flex flex-col lg:flex-row justify-between lg:items-end gap-4 mb-10">
         <Input
           title="Lider da equipe"
           type="text"
-          className="mb-4"
           placeholder="Digite o nome do encarregado..."
         />
         <div className="flex flex-row items-end gap-4">
           <Input title="Início" type="date" />
           <Input title="Final" type="date" />
         </div>
-        <Button size="default" type="button" variant="default">
+        <Button className="lg:max-w-[200px]" type="button">
           <FaSearch />
         </Button>
       </form>
@@ -56,23 +55,23 @@ const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
         <div>
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto rounded">
-              <thead className="bg-green-900 text-white ">
-                <tr className="border">
-                  <th className="border px-2 py-1 text-center">Data</th>
-                  <th className="border px-2 py-1 text-center">ID</th>
-                  <th className="border px-2 py-1 text-center">Equipe</th>
-                  <th className="border px-2 py-1 text-center">Nome</th>
-                  <th className="border px-2 py-1 text-center">Placa</th>
+              <thead>
+                <tr className="border-b">
+                  <th className="border-b text-center">Data</th>
+                  <th className="border-b text-center">ID</th>
+                  <th className="border-b text-center">Equipe</th>
+                  <th className="border-b text-center">Nome</th>
+                  <th className="border-b text-center">Placa</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((d) => (
-                  <tr key={d.id}>
-                    <td className="border  py-1 text-center">{d.data}</td>
-                    <td className="border  py-1 text-center">{d.id}</td>
-                    <td className="border py-1 text-center">{d.equipe}</td>
-                    <td className="border  py-1 text-center">{d.nome}</td>
-                    <td className="border py-1 text-center">{d.placa}</td>
+                  <tr key={d.id} className="cursor-pointer hover:bg-gray-200">
+                    <td className="border-b py-2 text-center">{d.data}</td>
+                    <td className="border-b py-2 text-center">{d.id}</td>
+                    <td className="border-b py-2 text-center">{d.equipe}</td>
+                    <td className="border-b py-2 text-center">{d.nome}</td>
+                    <td className="border-b py-2 text-center">{d.placa}</td>
                   </tr>
                 ))}
               </tbody>

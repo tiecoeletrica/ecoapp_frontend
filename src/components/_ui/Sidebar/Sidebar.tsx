@@ -8,68 +8,13 @@ import {
   FaUser,
   FaPen,
 } from "react-icons/fa";
-// import { IconType } from "react-icons/lib";
 
+interface PropsTipo {
+  typeAcess: string;
+}
 import OutForm from "@/components/form/OutForm";
-
-// import ActiveLink from "../ActiveLink";
-
-// import classNames from "classnames";
-
-// interface MenuItem {
-//   id: number;
-//   label: string;
-//   icon: IconType;
-//   link: string;
-// }
-
-// interface MenuItems {
-//   [key: string]: MenuItem[];
-// }
-
-// interface SidebarProps {
-//   typeAcess: string;
-// }
-// { typeAcess }: SidebarProps
-
-// MELHOR ATÉ AGORA
-// ADM: [
-//       {
-//         id: 1,
-//         label: "Indicadores",
-//         icon: FaDatabase,
-//         link: "/admin",
-//       },
-//       {
-//         id: 2,
-//         label: "Programação",
-//         icon: FaCalendarAlt,
-//         link: "/admin/programacao",
-//       },
-//       { id: 3, label: "Turno", icon: FaClock, link: "/admin/turno" },
-//       {
-//         id: 4,
-//         label: "Cadastrar",
-//         icon: FaUser,
-//         link: "/admin/users/usuarios",
-//       },
-//       { id: 5, label: "Editar", icon: FaPen, link: "/admin/edit-sign" },
-//     ],
-//     CAMPO: [
-//       {
-//         id: 1,
-//         label: "Indicadores",
-//         icon: FaDatabase,
-//         link: "/admin",
-//       },
-//       {
-//         id: 2,
-//         label: "Programação",
-//         icon: FaCalendarAlt,
-//         link: "/admin/programacao",
-//       },
-//     ],
-function Sidebar() {
+const Sidebar = ({ typeAcess }: PropsTipo) => {
+  console.log(typeAcess);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -169,7 +114,7 @@ function Sidebar() {
       </div>
     </div>
   );
-}
+};
 
 // function Sidebar() {
 //   const [openMenu, setOpenMenu] = useState(null);

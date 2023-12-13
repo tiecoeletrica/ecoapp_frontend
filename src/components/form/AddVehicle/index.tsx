@@ -1,6 +1,7 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaAngleLeft, FaAngleRight, FaPen } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight, FaPen, FaPlus } from "react-icons/fa";
 
 interface PropsResponse {
   id: number;
@@ -23,6 +24,7 @@ import { Select } from "@/components/_ui/Select";
 import PropTypes from "prop-types";
 
 const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
+  const { push } = useRouter();
   const [originalList] = useState<PropsResponse[]>(response);
   const [filteredUsers, setFilteredUsers] =
     useState<PropsResponse[]>(originalList);
@@ -50,6 +52,10 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
     }
   };
 
+  function handlePageVehicle(d: PropsResponse) {
+    push(`/admin/users/vehicle/${d.id}`);
+  }
+
   // const placas = response
   //   .filter((item) => item.tipo !== "")
   //   .map((item) => item.placa);
@@ -61,7 +67,7 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
   //   search.length > 0 ? repos.filter((repo) => repo.includes(search)) : [];
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="w-full mx-auto px-4">
       <form className="flex flex-wrap justify-between items-end mb-10">
         <div className="max-w-[600px]">
           <Input
@@ -70,8 +76,6 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
             maxLength={7}
             name="search"
             className="w-full"
-            // value={search}
-            // onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <div className="flex gap-4">
@@ -81,13 +85,8 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
             <option value="LEVE">LEVE</option>
             <option value="RETRO">RETRO</option>
           </Select>
-          <Button
-            className="px-10"
-            size="default"
-            type="button"
-            variant="default"
-          >
-            Cadastrar
+          <Button className="px-10" type="button" variant="default">
+            Nova Equipe <FaPlus className="ml-2" />
           </Button>
         </div>
       </form>
@@ -95,38 +94,33 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
         <div>
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto rounded">
-              <thead className="bg-green-900 text-white ">
-                <tr className="border">
-                  <th className="border px-2 py-1 text-center max-w-[10px]">
-                    ID
-                  </th>
-                  <th className="border px-2 py-1 text-center max-w-[10px]">
-                    Placa
-                  </th>
-                  <th className="border px-2 py-1 text-center max-w-[10px]">
-                    Tipo
-                  </th>
-                  <th className="border px-2 py-1 text-center">Equipe</th>
-                  <th className="border py-1 text-center  max-w-[10px]">
-                    Ações
-                  </th>
+              <thead>
+                <tr className="border-b">
+                  <th className="py-1 text-center max-w-[10px]">ID</th>
+                  <th className="py-1 text-center max-w-[10px]">Placa</th>
+                  <th className="py-1 text-center max-w-[10px]">Tipo</th>
+                  <th className="py-1 text-center">Equipe</th>
+                  <th className="py-1 text-center  max-w-[10px]">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((d) => (
-                  <tr key={d.id}>
-                    <td className="border  py-1 text-center max-w-[10px]">
+                  <tr key={d.id} className="cursor-pointer hover:bg-gray-200">
+                    <td className="border-b py-2 text-center max-w-[10px]">
                       {d.id}
                     </td>
-                    <td className="border  py-1 text-center max-w-[10px]">
+                    <td className="border-b py-2 text-center max-w-[10px]">
                       {d.placa}
                     </td>
-                    <td className="border  py-1 text-center  max-w-[10px]">
+                    <td className="border-b py-2 text-center  max-w-[10px]">
                       {d.tipo}
                     </td>
-                    <td className="border  py-1 text-center">{d.equipe_id}</td>
-                    <td className="border  py-1 text-center  max-w-[10px]">
-                      <FaPen className="mx-auto" />
+                    <td className="border-b py-2 text-center">{d.equipe_id}</td>
+                    <td className="border-b py-2 text-center  max-w-[10px]">
+                      <FaPen
+                        className="mx-auto"
+                        onClick={() => handlePageVehicle(d)}
+                      />
                     </td>
                   </tr>
                 ))}

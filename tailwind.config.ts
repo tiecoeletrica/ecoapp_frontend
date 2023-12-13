@@ -8,10 +8,12 @@ const config: Config = {
   ],
   theme: {
     screens: {
+      mobile: "480px",
       sm: "480px",
+      tablet: "640px",
       md: "768px",
       lg: "976px",
-      xl: "1440px",
+      xl: "1400px",
     },
     colors: {
       "blue-dark-900": "#0E0048",
