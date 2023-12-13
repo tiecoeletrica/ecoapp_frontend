@@ -1,54 +1,37 @@
-"use client";
+import { getServerSession } from "next-auth";
+
 import SearchUsers from "@/components/form/SearchUsers";
 
-// import axios from "axios";
-const data = [
-  {
-    id: 1,
-    cpf: "************",
-    nome: "JOAO",
-    tipo: "SUPERVISOR (A) DE OBRAS",
-    email: "email123teste@ecoeletrica.com.br",
-  },
-  {
-    id: 2,
-    cpf: "************",
-    nome: "PEDRO",
-    tipo: "SUPERVISOR (A) DE OBRAS",
-    email: "email123teste@ecoeletrica.com.br",
-  },
-  {
-    id: 3,
-    cpf: "************",
-    nome: "CAIO",
-    tipo: "ADM",
-    email: "email123teste@ecoeletrica.com.br",
-  },
-  {
-    id: 4,
-    cpf: "************",
-    nome: "FERNANDO 1",
-    tipo: "SUPERVISOR (A) DE OBRAS",
-    email: "email123teste@ecoeletrica.com.br",
-  },
-  {
-    id: 5,
-    cpf: "************",
-    nome: "FERNANDO 1",
-    tipo: "SUPERVISOR (A) DE OBRAS",
-    email: "email123teste@ecoeletrica.com.br",
-  },
-];
-const Users = () => {
-  // const response = await axios.get("http://192.168.0.66:3000/colaboradores", {
-  //   headers: {
-  //     Authorization: `Token ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDIzMTQwOTYsImV4cCI6MTcwMjQwMDQ5Niwic3ViIjoiOCJ9.9i5dw-XdR9Oz8erRwBZL-nMNvlTJzhEdnJTRKDqFWKA"}`,
-  //   },
-  // });
-  // const data = response.data;
+import { authOptions } from "@/lib/auth";
+import axios from "axios";
+interface Session {
+  user: {
+    nome: string;
+    cpf: number;
+    email: string;
+    equipe_id: string;
+    tipo: string;
+    status: string;
+  };
+  tokenUser: string;
+}
+
+const Users = async () => {
+  const session: Session | null = await getServerSession(authOptions);
+
+  if (!session || !session.user || !session.tokenUser) {
+    return <div>Please log in</div>;
+  }
+  const response = await axios.get("http://192.168.0.72:3000/colaboradores", {
+    headers: {
+      Authorization: `Token ${session.tokenUser}`,
+    },
+  });
+  const data = response.data;
+
   return (
     <div className="h-screen p-4">
-      <SearchUsers response={data} />
+      <SearchUsers token={session.tokenUser} response={data} />
     </div>
   );
 };

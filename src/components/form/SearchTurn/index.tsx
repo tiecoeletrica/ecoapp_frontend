@@ -10,10 +10,10 @@ import PropTypes from "prop-types";
 interface PropsResponse {
   id: number;
   equipe_id: number;
-  placa: string;
   equipe: string;
+  nome: string;
   data: string;
-  construction: string;
+  placa: string;
 }
 
 interface SearchUsersProps {
@@ -41,6 +41,7 @@ const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
         <Input
           title="Lider da equipe"
           type="text"
+          className="mb-4"
           placeholder="Digite o nome do encarregado..."
         />
         <div className="flex flex-row items-end gap-4">
@@ -57,23 +58,21 @@ const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
             <table className="min-w-full table-auto rounded">
               <thead className="bg-green-900 text-white ">
                 <tr className="border">
-                  <th className="border px-2 py-1 text-center">ID</th>
                   <th className="border px-2 py-1 text-center">Data</th>
-                  <th className="border px-2 py-1 text-center">Obra</th>
-                  <th className="border px-2 py-1 text-center">Placa</th>
+                  <th className="border px-2 py-1 text-center">ID</th>
+                  <th className="border px-2 py-1 text-center">Equipe</th>
                   <th className="border px-2 py-1 text-center">Nome</th>
+                  <th className="border px-2 py-1 text-center">Placa</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((d) => (
                   <tr key={d.id}>
-                    <td className="border  py-1 text-center">{d.equipe_id}</td>
-                    <td className="border py-1 text-center">{d.data}</td>
-                    <td className="border py-1 text-center">
-                      {d.construction}
-                    </td>
-                    <td className="border  py-1 text-center">{d.placa}</td>
-                    <td className="border  py-1 text-center">{d.equipe}</td>
+                    <td className="border  py-1 text-center">{d.data}</td>
+                    <td className="border  py-1 text-center">{d.id}</td>
+                    <td className="border py-1 text-center">{d.equipe}</td>
+                    <td className="border  py-1 text-center">{d.nome}</td>
+                    <td className="border py-1 text-center">{d.placa}</td>
                   </tr>
                 ))}
               </tbody>

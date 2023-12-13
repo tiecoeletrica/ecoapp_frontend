@@ -4,16 +4,26 @@ import EditInForm from "@/components/form/EditInForm";
 
 import { authOptions } from "@/lib/auth";
 
-interface Token {
-  nome: string;
-  cpf: number;
-  email: string;
-  equipe_id: string;
-  tipo: string;
-  status: string;
+// Update the interface to match the actual structure returned by getServerSession
+interface Session {
+  user: {
+    nome: string;
+    cpf: number;
+    email: string;
+    equipe_id: string;
+    tipo: string;
+    status: string;
+  };
+  // Add other properties if needed
 }
+
 const page = async () => {
-  const session: Token | null = await getServerSession(authOptions);
+  const session: Session | null = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    return <div>Please log in</div>;
+  }
+
   const {
     nome,
     email,
@@ -21,7 +31,7 @@ const page = async () => {
     equipe_id = "",
     tipo = "",
     status = "",
-  } = session || { nome: "", email: "" };
+  } = session.user;
 
   return (
     <div className="w-full">

@@ -1,44 +1,32 @@
-import AddVehicle from "@/components/form/AddVehicle";
-const data = [
-  {
-    id: 1,
-    placa: "RET4039",
-    tipo: "RETRO",
-    equipe_id: 2,
-  },
-  {
-    id: 2,
-    placa: "RET2009",
-    tipo: "RETRO",
-    equipe_id: 1,
-  },
-  {
-    id: 3,
-    placa: "RET9796",
-    tipo: "PESADO",
-    equipe_id: 3,
-  },
-  {
-    id: 4,
-    placa: "JRF9524",
-    tipo: "PESADO",
-    equipe_id: 5,
-  },
-  {
-    id: 5,
-    placa: "FYI0J92",
-    tipo: "LEVE",
-    equipe_id: 5,
-  },
-  {
-    id: 6,
-    placa: "RPA2J17",
-    tipo: "LEVE",
-    equipe_id: 4,
-  },
-];
+import { getServerSession } from "next-auth";
 
-const Veiculos = () => {
+import AddVehicle from "@/components/form/AddVehicle";
+
+import { authOptions } from "@/lib/auth";
+import axios from "axios";
+
+interface Session {
+  user: {
+    id: number;
+    placa: string;
+    tipo: string;
+    equipe_id: number;
+  };
+  tokenUser: string;
+}
+
+const Veiculos = async () => {
+  const session: Session | null = await getServerSession(authOptions);
+
+  if (!session || !session.user || !session.tokenUser) {
+    return <div>Please log in</div>;
+  }
+  const response = await axios.get("http://192.168.0.72:3000/veiculos", {
+    headers: {
+      Authorization: `Token ${session.tokenUser}`,
+    },
+  });
+  const data = response.data;
   return (
     <div className="h-screen p-4">
       <AddVehicle response={data} />

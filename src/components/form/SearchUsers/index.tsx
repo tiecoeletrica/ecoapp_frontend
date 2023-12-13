@@ -14,19 +14,22 @@ interface PropsResponse {
   cpf: string;
   email: string;
   tipo: string;
+  toekn: string;
 }
 
 interface SearchUsersProps {
   response: PropsResponse[];
+  token: string;
 }
 
-const SearchUsers: React.FC<SearchUsersProps> = ({ response }) => {
+const SearchUsers: React.FC<SearchUsersProps> = ({ response, token }) => {
   const [originalList] = useState<PropsResponse[]>(response);
   const { push } = useRouter();
+  console.log(token);
   const [filteredUsers, setFilteredUsers] =
     useState<PropsResponse[]>(originalList);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 16;
   const pageCount = Math.ceil(filteredUsers.length / itemsPerPage);
 
   const lastItemIndex = currentPage * itemsPerPage;
@@ -162,5 +165,6 @@ const SearchUsers: React.FC<SearchUsersProps> = ({ response }) => {
 
 SearchUsers.propTypes = {
   response: PropTypes.array.isRequired,
+  token: PropTypes.string.isRequired,
 };
 export default SearchUsers;
