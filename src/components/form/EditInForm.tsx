@@ -64,6 +64,7 @@ const EditInForm = ({ nome, email }: Token) => {
           placeholder="Digite o seu nome..."
           disabled
           value={nome}
+          className="mb-2"
         />
         {errors.nome && <span>{errors.nome.message}</span>}
       </div>
@@ -75,6 +76,7 @@ const EditInForm = ({ nome, email }: Token) => {
           placeholder="Digite o email coorporativo..."
           disabled
           value={email}
+          className="mb-2"
         />
         {errors.email && <span>{errors.email.message}</span>}
       </div>
@@ -84,6 +86,7 @@ const EditInForm = ({ nome, email }: Token) => {
           title="Senha"
           {...register("password")}
           placeholder="Digite a sua senha..."
+          className="mb-2"
         />
         {errors.password && <span>{errors.password.message}</span>}
       </div>
@@ -93,6 +96,7 @@ const EditInForm = ({ nome, email }: Token) => {
           title="Confirme a sua senha"
           {...register("confirmPassword")}
           placeholder="Cofirme a senha..."
+          className="mb-2"
         />
         {errors.confirmPassword && (
           <span>{errors.confirmPassword.message}</span>

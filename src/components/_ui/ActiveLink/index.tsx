@@ -12,11 +12,7 @@ const ActiveLink = ({ href, children, ...rest }: ActiveLinkProps) => {
   const isActive = pathname === href.toString();
   return (
     <Link
-      className={`${
-        isActive
-          ? "bg-gray-300 rounded w-full transition duration-300	text-white"
-          : "hover:bg-gray-300 rounded w-full transition duration-300	hover:text-white"
-      }`}
+      className={`${isActive ? "bg-gray-300" : "hover:bg-gray-300"}`}
       href={href}
       {...rest}
     >

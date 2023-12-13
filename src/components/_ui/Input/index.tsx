@@ -55,7 +55,10 @@ const mapSizeToWidth = (size: Width<string>): string | undefined => {
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, title, variant, size, ...props }, ref) => {
     return (
-      <div className="flex flex-col max-w-[600px] w-full" style={{ width: mapSizeToWidth(size) }}>
+      <div
+        className="flex flex-col w-full max-w-[1440px]"
+        style={{ width: mapSizeToWidth(size) }}
+      >
         <label className="block text-center text-blue-dark font-bold text-base">
           {title}
         </label>
