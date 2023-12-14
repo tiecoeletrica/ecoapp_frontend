@@ -1,4 +1,3 @@
-// components/Form.tsx
 "use client";
 import React, { useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaSearch } from "react-icons/fa";
@@ -6,7 +5,7 @@ import { FaAngleLeft, FaAngleRight, FaSearch } from "react-icons/fa";
 import { Button } from "@/components/_ui/Button";
 import { Input } from "@/components/_ui/Input";
 
-import { TurnType } from "@/types/Turno";
+import { TurnType } from "@/types/type-req";
 
 interface FormProps {
   data: TurnType[];

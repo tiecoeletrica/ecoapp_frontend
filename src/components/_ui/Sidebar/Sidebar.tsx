@@ -14,10 +14,9 @@ interface PropsTipo {
 }
 import OutForm from "@/components/form/OutForm";
 const Sidebar = ({ typeAcess }: PropsTipo) => {
-  console.log(typeAcess);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
-
+  console.log(typeAcess);
   const menuItems = [
     {
       id: "dashboard",
@@ -44,10 +43,9 @@ const Sidebar = ({ typeAcess }: PropsTipo) => {
         { id: "sub2-1", label: "Usuários", link: "/admin/users/usuarios" },
         {
           id: "sub2-2",
-          label: "Veículo",
-          link: "/admin/users//vehicle",
+          label: "Equipes",
+          link: "/admin/users/equipes",
         },
-        { id: "sub2-3", label: "Equipe", link: "/admin/users/team" },
       ],
       link: "#",
     },

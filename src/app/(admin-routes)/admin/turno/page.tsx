@@ -1,40 +1,19 @@
-import { getServerSession } from "next-auth";
+import Form from "./components/Form";
 
-import SearchTurn from "@/app/(admin-routes)/admin/turno/components/SearchTurn";
-
-import { authOptions } from "@/lib/auth";
-import axios from "axios";
-
-interface Session {
-  user: {
-    id: number;
-    equipe_id: number;
-    equipe: string;
-    nome: string;
-    data: string;
-    placa: string;
-  };
-  tokenUser: string;
-}
-
-const turno = async () => {
-  const session: Session | null = await getServerSession(authOptions);
-
-  if (!session || !session.user || !session.tokenUser) {
-    return <div>Please log in</div>;
-  }
-
-  const response = await axios.get("http://192.168.0.72:3000/turnos", {
-    headers: {
-      Authorization: `Token ${session.tokenUser}`,
-    },
+import api from "@/services/api";
+import { TurnType } from "@/types/type-req";
+const getTurnos = async () =>
+  api.get("/turnos").then((response) => {
+    return response.data;
   });
-  const data = response.data;
+
+const ExemploPage = async () => {
+  const response: TurnType[] = await getTurnos();
   return (
-    <div className="h-screen p-4">
-      <SearchTurn response={data} />
+    <div>
+      <Form data={response} />
     </div>
   );
 };
 
-export default turno;
+export default ExemploPage;

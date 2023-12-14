@@ -1,40 +1,19 @@
-import { getServerSession } from "next-auth";
+import Form from "./components/Form";
 
-import AddVehicle from "./components/AddVehicle";
+import api from "@/services/api";
+import { VehicleType } from "@/types/type-req";
+const getVehicles = async () =>
+  api.get("/veiculos").then((response) => {
+    return response.data;
+  });
 
-import { authOptions } from "@/lib/auth";
-import axios from "axios";
-
-interface Session {
-  user: {
-    id: number;
-    placa: string;
-    tipo: string;
-    equipe_id: number;
-  };
-  tokenUser: string;
-}
-
-const Veiculos = async () => {
-  const session: Session | null = await getServerSession(authOptions);
-
-  if (!session || !session.user || !session.tokenUser) {
-    return <div>Please log in</div>;
-  }
-  const response = await axios.get(
-    "https://backend-api-ej9i.onrender.com/veiculos",
-    {
-      headers: {
-        Authorization: `Token ${session.tokenUser}`,
-      },
-    },
-  );
-  const data = response.data;
+const vehicle = async () => {
+  const response: VehicleType[] = await getVehicles();
   return (
-    <div className="h-screen p-4">
-      <AddVehicle response={data} />
+    <div>
+      <Form data={response} />
     </div>
   );
 };
 
-export default Veiculos;
+export default vehicle;

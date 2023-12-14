@@ -1,25 +1,28 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight, FaPen } from "react-icons/fa";
 
 import { Button } from "@/components/_ui/Button";
-import { Input } from "@/components/_ui/Input";
+import { Select } from "@/components/_ui/Select";
 
-import { TurnType as TurnType } from "@/types/Turno";
-import PropTypes from "prop-types";
-
-interface SearchUsersProps {
-  response: TurnType[];
+import { SearchUsersType } from "@/types/type-req";
+interface FormProps {
+  data: SearchUsersType[];
 }
-const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
+
+const Form = ({ data }: FormProps) => {
+  const [originalList] = useState(data);
+  const { push } = useRouter();
+  const [filteredUsers, setFilteredUsers] =
+    useState<SearchUsersType[]>(originalList);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const pageCount = Math.ceil(response.length / itemsPerPage);
+  const itemsPerPage = 16;
+  const pageCount = Math.ceil(filteredUsers.length / itemsPerPage);
 
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
-  const currentItems = response.slice(firstItemIndex, lastItemIndex);
+  const currentItems = filteredUsers.slice(firstItemIndex, lastItemIndex);
 
   const goToNextPage = () =>
     setCurrentPage((page) => (page < pageCount ? page + 1 : page));
@@ -27,43 +30,70 @@ const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
   const goToPreviousPage = () =>
     setCurrentPage((page) => (page > 1 ? page - 1 : page));
 
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedType = e.target.value;
+    if (selectedType == "Filtrar por") {
+      setFilteredUsers(originalList);
+    } else {
+      const filteredList = originalList.filter(
+        (item) => item.tipo === selectedType,
+      );
+      setFilteredUsers(filteredList);
+    }
+  };
+
+  const handlePageUser = (d: SearchUsersType) => {
+    push(`/admin/users/usuarios/${d.id}`);
+  };
+
+  // console.log(filteredUsers);
+
   return (
     <div className="w-full mx-auto px-4">
-      <form className="flex flex-col lg:flex-row justify-between lg:items-end gap-4 mb-10">
-        <Input
-          title="Lider da equipe"
-          type="text"
-          placeholder="Digite o nome do encarregado..."
-        />
-        <div className="flex flex-row items-end gap-4">
-          <Input title="Início" type="date" />
-          <Input title="Final" type="date" />
+      <div className="flex justify-between items-center mb-10">
+        <div>
+          <h1 className="font-bold text-3xl">Lista de usuários</h1>
         </div>
-        <Button className="lg:max-w-[200px]" type="button">
-          <FaSearch />
-        </Button>
-      </form>
+        <div className="flex mt-4 gap-4">
+          <Select onChange={handleFilterChange}>
+            <option value="Filtrar por">Filtrar por</option>
+            <option value="ADM">ADM</option>
+            <option value="CAMPO">CAMPO</option>
+            <option value="SUPERVISOR (A) DE OBRAS">
+              SUPERVISOR (A) DE OBRAS
+            </option>
+          </Select>
+          <Button className="px-10">Criar</Button>
+        </div>
+      </div>
       {currentItems.length ? (
         <div>
           <div className="overflow-x-auto">
-            <table className="min-w-full table-auto rounded">
+            <table className="min-w-full table-auto rounded overflow-x">
               <thead>
                 <tr className="border-b">
-                  <th className="border-b text-center">Data</th>
                   <th className="border-b text-center">ID</th>
-                  <th className="border-b text-center">Equipe</th>
+                  <th className="border-b text-center">CPF</th>
                   <th className="border-b text-center">Nome</th>
-                  <th className="border-b text-center">Placa</th>
+                  <th className="border-b text-center">Email</th>
+                  <th className="border-b text-center">Tipo</th>
+                  <th className="border-b text-center">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((d) => (
                   <tr key={d.id} className="cursor-pointer hover:bg-gray-200">
-                    <td className="border-b py-2 text-center">{d.data}</td>
                     <td className="border-b py-2 text-center">{d.id}</td>
-                    <td className="border-b py-2 text-center">{d.equipe}</td>
+                    <td className="border-b py-2 text-center">{d.cpf}</td>
                     <td className="border-b py-2 text-center">{d.nome}</td>
-                    <td className="border-b py-2 text-center">{d.placa}</td>
+                    <td className="border-b py-2 text-center">{d.email}</td>
+                    <td className="border-b py-2 text-center">{d.tipo}</td>
+                    <td className="border-b py-2 text-center">
+                      <FaPen
+                        className="mx-auto cursor-pointer"
+                        onClick={() => handlePageUser(d)}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -115,9 +145,4 @@ const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
     </div>
   );
 };
-
-SearchTurn.propTypes = {
-  response: PropTypes.array.isRequired,
-};
-
-export default SearchTurn;
+export default Form;
