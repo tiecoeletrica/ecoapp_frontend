@@ -6,28 +6,20 @@ import { FaAngleLeft, FaAngleRight, FaPen } from "react-icons/fa";
 import { Button } from "@/components/_ui/Button";
 import { Select } from "@/components/_ui/Select";
 
+import { SearchUsersType } from "@/types/SearchUsers";
 import PropTypes from "prop-types";
 
-interface PropsResponse {
-  id: number;
-  nome: string;
-  cpf: string;
-  email: string;
-  tipo: string;
-  toekn: string;
-}
-
 interface SearchUsersProps {
-  response: PropsResponse[];
+  response: SearchUsersType[];
   token: string;
 }
 
 const SearchUsers: React.FC<SearchUsersProps> = ({ response, token }) => {
-  const [originalList] = useState<PropsResponse[]>(response);
+  const [originalList] = useState<SearchUsersType[]>(response);
   const { push } = useRouter();
   console.log(token);
   const [filteredUsers, setFilteredUsers] =
-    useState<PropsResponse[]>(originalList);
+    useState<SearchUsersType[]>(originalList);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 16;
   const pageCount = Math.ceil(filteredUsers.length / itemsPerPage);
@@ -54,7 +46,7 @@ const SearchUsers: React.FC<SearchUsersProps> = ({ response, token }) => {
     }
   };
 
-  const handlePageUser = (d: PropsResponse) => {
+  const handlePageUser = (d: SearchUsersType) => {
     push(`/admin/users/usuarios/${d.id}`);
   };
 

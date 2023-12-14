@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import SearchUsers from "@/components/form/SearchUsers";
+import SearchUsers from "./components/SearchUsers/index";
 
 import { authOptions } from "@/lib/auth";
 import axios from "axios";
@@ -22,11 +22,14 @@ const Users = async () => {
   if (!session || !session.user || !session.tokenUser) {
     return <div>Please log in</div>;
   }
-  const response = await axios.get("http://192.168.0.72:3000/colaboradores", {
-    headers: {
-      Authorization: `Token ${session.tokenUser}`,
+  const response = await axios.get(
+    "https://backend-api-ej9i.onrender.com/colaboradores",
+    {
+      headers: {
+        Authorization: `Token ${session.tokenUser}`,
+      },
     },
-  });
+  );
   const data = response.data;
 
   return (

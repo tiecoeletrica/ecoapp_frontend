@@ -1,32 +1,31 @@
 "use client";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import { Button } from "../../components/_ui/Button";
-import { Input } from "../../components/_ui/Input";
+import { Button } from "../../../../components/_ui/Button";
+import { Input } from "../../../../components/_ui/Input";
 
-import Logo from "../../../public/logo.svg";
+import Logo from "../../../../../public/logo.svg";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-
 const createUserFormSchema = z.object({
+  name: z.string().min(7, "O nome foi digitado corretamente?"),
   email: z
     .string()
     .nonempty("O email é obrigatório!")
     .email("Formato de email inválido")
     .refine((email) => {
       return email.endsWith("@ecoeletrica.com.br");
-    }, "O email deve conter o domínio da Ecoelétrica"),
-  password: z.string().min(3, "A senha precisa conter no minimo 6 caracteres"),
+    }, "O email deve conter o dominio da Ecoelétrica"),
+  password: z.string().min(6, "Senha precisa conter no minimo 6 dígitos."),
 });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
-const SignInForm = () => {
-  const router = useRouter();
+const SignUpForm = () => {
+  const route = useRouter();
   const {
     register,
     handleSubmit,
@@ -34,19 +33,22 @@ const SignInForm = () => {
   } = useForm<createUserFormData>({
     resolver: zodResolver(createUserFormSchema),
   });
-
   const onSubmit = async (values: createUserFormData) => {
-    const signInData = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
+    const response = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: values.name,
+        email: values.email,
+        password: values.password,
+      }),
     });
-
-    if (signInData?.error) {
-      alert("Login não foi encontrado");
+    if (response.ok) {
+      route.push("/sign-in");
     } else {
-      router.refresh();
-      router.push("/admin");
+      console.log("Registro falhou");
     }
   };
 
@@ -64,32 +66,41 @@ const SignInForm = () => {
       />
       <div>
         <Input
-          type="email"
+          title="Nome"
+          type="text"
+          {...register("name")}
+          placeholder="Digite o nome completo..."
+        />
+        {errors.name && <span>{errors.name.message}</span>}
+      </div>
+      <div>
+        <Input
           title="E-mail"
+          type="email"
           {...register("email")}
-          placeholder="Digite o seu email..."
+          placeholder="Digite o email coorporativo..."
         />
         {errors.email && <span>{errors.email.message}</span>}
       </div>
-      <div className="mb-2">
+      <div>
         <Input
-          type="password"
           title="Senha"
+          type="password"
           {...register("password")}
-          placeholder="Digite a sua senha..."
+          placeholder="Digite a senha..."
         />
         {errors.password && <span>{errors.password.message}</span>}
       </div>
-      <Button size="full" variant="default" type="submit">
-        Entrar
+      <Button size="full" variant="solicitation" type="submit">
+        Solicitar
       </Button>
       <Link
-        href={"/sign-up"}
+        href={"/sign-in"}
         className="flex justify-center mt-5 font-bold text-blue-dark outline-none"
       >
-        Solicitar acesso
+        Já tenho login cadastrado!
       </Link>
     </form>
   );
 };
-export default SignInForm;
+export default SignUpForm;

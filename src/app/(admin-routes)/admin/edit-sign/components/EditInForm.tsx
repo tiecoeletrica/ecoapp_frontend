@@ -1,8 +1,8 @@
 "use client";
 import { useForm } from "react-hook-form";
 
-import { Button } from "../_ui/Button";
-import { Input } from "../_ui/Input";
+import { Button } from "../../../../../components/_ui/Button";
+import { Input } from "../../../../../components/_ui/Input";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";

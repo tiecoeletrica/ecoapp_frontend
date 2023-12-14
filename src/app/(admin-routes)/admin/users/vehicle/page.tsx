@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import AddVehicle from "@/components/form/AddVehicle";
+import AddVehicle from "./components/AddVehicle";
 
 import { authOptions } from "@/lib/auth";
 import axios from "axios";
@@ -21,11 +21,14 @@ const Veiculos = async () => {
   if (!session || !session.user || !session.tokenUser) {
     return <div>Please log in</div>;
   }
-  const response = await axios.get("http://192.168.0.72:3000/veiculos", {
-    headers: {
-      Authorization: `Token ${session.tokenUser}`,
+  const response = await axios.get(
+    "https://backend-api-ej9i.onrender.com/veiculos",
+    {
+      headers: {
+        Authorization: `Token ${session.tokenUser}`,
+      },
     },
-  });
+  );
   const data = response.data;
   return (
     <div className="h-screen p-4">

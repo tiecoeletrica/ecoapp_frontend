@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import EditInForm from "@/components/form/EditInForm";
+import EditInForm from "@/app/(admin-routes)/admin/edit-sign/components/EditInForm";
 
 import { authOptions } from "@/lib/auth";
 

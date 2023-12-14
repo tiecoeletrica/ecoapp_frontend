@@ -6,20 +6,12 @@ import { FaSearch } from "react-icons/fa";
 import { Button } from "@/components/_ui/Button";
 import { Input } from "@/components/_ui/Input";
 
+import { TurnType as TurnType } from "@/types/Turno";
 import PropTypes from "prop-types";
-interface PropsResponse {
-  id: number;
-  equipe_id: number;
-  equipe: string;
-  nome: string;
-  data: string;
-  placa: string;
-}
 
 interface SearchUsersProps {
-  response: PropsResponse[];
+  response: TurnType[];
 }
-
 const SearchTurn: React.FC<SearchUsersProps> = ({ response }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;

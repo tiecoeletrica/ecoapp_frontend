@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import SearchTurn from "@/components/form/SearchTurn";
+import SearchTurn from "@/app/(admin-routes)/admin/turno/components/SearchTurn";
 
 import { authOptions } from "@/lib/auth";
 import axios from "axios";
