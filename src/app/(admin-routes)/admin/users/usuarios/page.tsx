@@ -22,6 +22,7 @@ const Users = async () => {
   if (!session || !session.user || !session.tokenUser) {
     return <div>Please log in</div>;
   }
+  console.log(session?.tokenUser);
   const response = await axios.get(
     "https://backend-api-ej9i.onrender.com/colaboradores",
     {

@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
         const response = await axios.post(
-          "https://backend-api-ej9i.onrender.com/autenticacao",
+          "http://192.168.0.72:3000/autenticacao",
           {
             email: credentials?.email,
             senha: credentials?.password,

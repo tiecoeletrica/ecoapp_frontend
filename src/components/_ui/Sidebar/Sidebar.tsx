@@ -32,7 +32,7 @@ const Sidebar = ({ typeAcess }: PropsTipo) => {
       icon: FaDatabase,
       subMenu: [
         { id: "sub1-1", label: "Turno", link: "/admin/turno" },
-        { id: "sub1-1", label: "Calendário", link: "/admin/calendar" },
+        { id: "sub2-2", label: "Calendário", link: "/admin/calendar" },
       ],
       link: "/admin/programacao",
     },

@@ -15,3 +15,15 @@ export interface TurnType {
   data: string;
   placa: string;
 }
+
+export interface Session {
+  user: {
+    id: number;
+    equipe_id: number;
+    equipe: string;
+    nome: string;
+    data: string;
+    placa: string;
+  };
+  tokenUser: string;
+}
