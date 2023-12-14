@@ -1,8 +1,5 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-import { db } from "./db";
 
 import axios from "axios";
 interface MySessionType {
@@ -30,7 +27,6 @@ interface Token {
 }
 
 export const authOptions: NextAuthOptions = {
-  // adapter: PrismaAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
