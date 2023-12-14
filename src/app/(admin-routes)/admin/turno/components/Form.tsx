@@ -27,7 +27,7 @@ const Form: React.FC<FormProps> = ({ data }) => {
     setCurrentPage((page) => (page > 1 ? page - 1 : page));
 
   return (
-    <div className="w-full mx-auto px-4">
+    <div className="w-full mx-auto p-4">
       <form className="flex flex-col lg:flex-row justify-between lg:items-end gap-4 mb-10">
         <Input
           title="Lider da equipe"

@@ -30,7 +30,7 @@ interface Token {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  // adapter: PrismaAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
@@ -59,7 +59,6 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "auth/sign-in",
   },
-
   callbacks: {
     async session({
       session,

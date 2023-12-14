@@ -42,6 +42,7 @@ const SignInForm = () => {
       redirect: false,
     });
 
+    console.log(signInData);
     if (signInData?.error) {
       alert("Login não foi encontrado");
     } else {

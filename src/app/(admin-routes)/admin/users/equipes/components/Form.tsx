@@ -3,27 +3,21 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaPen, FaPlus } from "react-icons/fa";
 
-interface PropsResponse {
-  id: number;
-  placa: string;
-  tipo: string;
-  equipe_id?: number;
-}
-
-interface SearchVehicleProps {
-  response: PropsResponse[];
-}
 import { Button } from "@/components/_ui/Button";
 import { Input } from "@/components/_ui/Input";
 import { Select } from "@/components/_ui/Select";
 
+import { VehicleType } from "@/types/type-req";
 import PropTypes from "prop-types";
 
-const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
+interface SearchVehicleProps {
+  data: VehicleType[];
+}
+const AddVehicle = ({ data }: SearchVehicleProps) => {
   const { push } = useRouter();
-  const [originalList] = useState<PropsResponse[]>(response);
+  const [originalList] = useState<VehicleType[]>(data);
   const [filteredUsers, setFilteredUsers] =
-    useState<PropsResponse[]>(originalList);
+    useState<VehicleType[]>(originalList);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const pageCount = Math.ceil(filteredUsers.length / itemsPerPage);
@@ -48,8 +42,8 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
     }
   };
 
-  function handlePageVehicle(d: PropsResponse) {
-    push(`/admin/users/vehicle/${d.id}`);
+  function handlePageVehicle(d: VehicleType) {
+    push(`/admin/users/equipes/${d.id}`);
   }
 
   // const placas = response
@@ -63,7 +57,7 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
   //   search.length > 0 ? repos.filter((repo) => repo.includes(search)) : [];
 
   return (
-    <div className="w-full mx-auto px-4">
+    <div className="w-full mx-auto p-4">
       <form className="flex flex-wrap justify-between items-end mb-10">
         <div className="max-w-[600px]">
           <Input
@@ -81,8 +75,9 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
             <option value="LEVE">LEVE</option>
             <option value="RETRO">RETRO</option>
           </Select>
-          <Button className="px-10" type="button" variant="default">
-            Nova Equipe <FaPlus className="ml-2" />
+          <Button className="flex justify-between" type="button">
+            <span className="w-auto">Cadastrar</span>
+            <FaPlus className="ml-2" />
           </Button>
         </div>
       </form>
@@ -171,55 +166,6 @@ const AddVehicle: React.FC<SearchVehicleProps> = ({ response }) => {
 };
 
 AddVehicle.propTypes = {
-  response: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
 };
 export default AddVehicle;
-
-// const AddVehicle = () => {
-//   return (
-//     <div className="max-w-6xl w-full mx-auto">
-//       <div className="flex items-end justify-between w-full gap-2 mb-10">
-//         <Input title="Placa" placeholder="Digite a placa..." />
-//         <Select title="Tipo">
-//           <option value="Escolha">Escolha</option>
-//           <option value="Leve">Leve</option>
-//           <option value="Retro">Retro</option>
-//           <option value="Pesado">Pesado</option>
-//         </Select>
-//         <Select title="Equipe">
-//           {equipes.map((item) => {
-//             return (
-//               <option key={item} value={item}>
-//                 {item}
-//               </option>
-//             );
-//           })}
-//         </Select>
-//         <Button variant="default">Cadastrar</Button>
-//       </div>
-//       <div className="w-full overflow-auto max-h-96 h-full rounded border">
-//         <div className="w-full flex justify-between border-b bg-blue-dark-900 text-white ">
-//           <div className="max-w-[25%%] bg- w-full text-center border-r">
-//             Placa
-//           </div>
-//           <div className="max-w-[25%%] w-full text-center border-r">Tipo</div>
-//           <div className="max-w-[25%%] w-full text-center border-r">Equipe</div>
-//           <div className="max-w-[25%%] w-full text-center">Editar</div>
-//         </div>
-//         {veiculos.length &&
-//           veiculos.map((item) => {
-//             return (
-//               <LineVehicles
-//                 key={item.placa}
-//                 placa={item.placa}
-//                 tipo={item.tipo}
-//                 equipe={item.equipe}
-//               />
-//             );
-//           })}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AddVehicle;

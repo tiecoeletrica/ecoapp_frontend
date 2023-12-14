@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../../../../components/_ui/Button";
@@ -20,11 +21,13 @@ const createUserFormSchema = z.object({
     .refine((email) => {
       return email.endsWith("@ecoeletrica.com.br");
     }, "O email deve conter o dominio da Ecoelétrica"),
-  password: z.string().min(6, "Senha precisa conter no minimo 6 dígitos."),
+  password: z.string().min(3, "Senha precisa conter no minimo 6 dígitos."),
 });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
 const SignUpForm = () => {
+  const [message, setMessage] = useState("");
+
   const route = useRouter();
   const {
     register,
@@ -45,10 +48,12 @@ const SignUpForm = () => {
         password: values.password,
       }),
     });
+
     if (response.ok) {
       route.push("/sign-in");
     } else {
-      console.log("Registro falhou");
+      setMessage("Houve um erro no momento da solicitação.");
+      // console.log("Registro falhou");
     }
   };
 
@@ -64,33 +69,38 @@ const SignUpForm = () => {
         height={200}
         alt="Logotipo da empresa EcoElétrica, contendo uma folha estilizada que se assemelha a um raio, com as cores azul e verde."
       />
-      <div>
+      <div className="mb-4">
         <Input
           title="Nome"
           type="text"
           {...register("name")}
           placeholder="Digite o nome completo..."
         />
-        {errors.name && <span>{errors.name.message}</span>}
+        {errors.name && <span className="mt-2">{errors.name.message}</span>}
       </div>
-      <div>
+      <div className="mb-4">
         <Input
           title="E-mail"
           type="email"
           {...register("email")}
           placeholder="Digite o email coorporativo..."
         />
-        {errors.email && <span>{errors.email.message}</span>}
+        {errors.email && <span className="mt-2">{errors.email.message}</span>}
       </div>
-      <div>
+      <div className="mb-4">
         <Input
           title="Senha"
           type="password"
           {...register("password")}
           placeholder="Digite a senha..."
         />
-        {errors.password && <span>{errors.password.message}</span>}
+        {errors.password && (
+          <span className="mt-2">{errors.password.message}</span>
+        )}
       </div>
+      {message && (
+        <span className="block text-center mx-auto mb-4">{message}</span>
+      )}
       <Button size="full" variant="solicitation" type="submit">
         Solicitar
       </Button>

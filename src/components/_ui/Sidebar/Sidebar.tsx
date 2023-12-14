@@ -12,7 +12,7 @@ import {
 interface PropsTipo {
   typeAcess: string;
 }
-import OutForm from "@/components/form/OutForm";
+import OutForm from "@/components/_ui/ButtonOutForm/OutForm";
 const Sidebar = ({ typeAcess }: PropsTipo) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
