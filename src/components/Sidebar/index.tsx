@@ -38,15 +38,15 @@ const Sidebar = ({ typeAcess }: { typeAcess: string }) => {
         link: "/private/dashboard",
       },
       {
-        id: "programação",
-        label: "Programação",
+        id: "obras",
+        label: "Obras",
         icon: FaCalendarAlt,
         subMenu: [
-          { id: "sub1-1", label: "Turno", link: "/private/dashboard/turns" },
+          { id: "sub1-1", label: "Turnos", link: "/private/dashboard/turns" },
           {
-            id: "sub2-2",
-            label: "Calendário",
-            link: "/private/dashboard/calendar",
+            id: "sub1-2",
+            label: "Programação",
+            link: "/private/dashboard/shedule",
           },
         ],
         link: "/private/programacao",
@@ -61,6 +61,21 @@ const Sidebar = ({ typeAcess }: { typeAcess: string }) => {
             id: "sub2-2",
             label: "Equipes",
             link: "/private/dashboard/teams",
+          },
+          {
+            id: "sub2-3",
+            label: "Veiculos",
+            link: "/private/dashboard/vehicles",
+          },
+          {
+            id: "sub2-4",
+            label: "Serviços",
+            link: "/private/dashboard/activities",
+          },
+          {
+            id: "sub2-5",
+            label: "Perguntas",
+            link: "/private/dashboard/questions",
           },
         ],
         link: "#",

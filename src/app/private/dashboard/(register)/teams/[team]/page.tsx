@@ -6,7 +6,7 @@ import { propsSessionPage } from "@/types/next-auth";
 async function getInfoAboutTeam(id: string) {
   const session: propsSessionPage | null = await getServerSession(authOptions);
 
-  const res = fetch(`https://backend-api-ej9i.onrender.com/equipes/${id}`, {
+  const res = fetch(`http://192.168.0.11:3000/equipes/${id}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Token ${session?.tokenUser}`,

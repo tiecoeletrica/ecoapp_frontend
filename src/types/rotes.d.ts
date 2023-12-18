@@ -1,3 +1,4 @@
+import { QuestionType } from "@/types/rotes";
 export interface TurnType {
   id: number;
   equipe_id: number;
@@ -25,4 +26,12 @@ export interface VehiclesTeamType {
   coordenador_id?: string;
   supervisor_id?: string;
   contrato: strings;
+}
+export interface QuestionType {
+  id: number;
+  pergunta_resposta: string;
+  tipo: string;
+  categoria: string;
+  data_inicial: string;
+  data_final: string;
 }

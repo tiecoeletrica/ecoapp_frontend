@@ -12,7 +12,7 @@ const getSessionToken = async () => {
 const sessionToken = await getSessionToken();
 
 const api = axios.create({
-  baseURL: "https://backend-api-ej9i.onrender.com/",
+  baseURL: "http://192.168.0.11:3000",
   headers: {
     Authorization: `Token ${sessionToken}`,
   },
