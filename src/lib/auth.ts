@@ -1,37 +1,14 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { db } from "./db";
-
+import { propsSession, prospToken } from "@/types/next-auth";
 import axios from "axios";
-interface MySessionType {
-  user: {
-    username: {
-      colaborador: {
-        nome: string;
-      };
-    };
-  };
-}
-interface Token {
-  username: {
-    colaborador: {
-      id: number;
-      nome: string;
-      cpf: number;
-      email: string;
-      equipe_id: string;
-      tipo: string;
-      status: string;
-    };
-    token: string;
-  };
-}
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "public/sign-in",
+  },
   session: {
     strategy: "jwt",
   },
@@ -45,36 +22,40 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
         const response = await axios.post(
-          "http://192.168.0.72:3000/autenticacao",
+          "https://backend-api-ej9i.onrender.com/autenticacao",
           {
             email: credentials?.email,
             senha: credentials?.password,
           },
         );
         const user = await response.data;
+
         return user;
       },
     }),
   ],
-  pages: {
-    signIn: "auth/sign-in",
-  },
-
   callbacks: {
     async session({
       session,
       token,
     }: {
-      session: MySessionType;
-      token: Token;
+      session: propsSession;
+      token: prospToken;
     }) {
       if (token) {
         return {
-          user: token.username.colaborador,
+          ...session,
+          user: {
+            id: token.username.colaborador.id,
+            username: token.username.colaborador.nome,
+            email: token.username.colaborador.email,
+            role: token.username.colaborador.tipo,
+            cpf: token.username.colaborador.cpf,
+            status: token.username.colaborador.status,
+          },
           tokenUser: token.username.token,
         };
       }
-
       return session;
     },
     async jwt({ token, user }) {

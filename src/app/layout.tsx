@@ -1,14 +1,14 @@
-import "../styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "../styles/globals.css";
 
-import NextAuthSessionProvider from "@/providers/sessionProvider";
+import NextAuthSessionProvider from "@/providers/SessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Eco app",
-  description: "Gerenciamento de processos da Ecoelétrica",
+  description: "Eco App",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="PT-BR">
+    <html>
       <body className={inter.className}>
         <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
       </body>
