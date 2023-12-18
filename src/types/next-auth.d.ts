@@ -1,20 +1,41 @@
-import NextAuth from "next-auth";
+export interface propsSession {
+  user: {
+    username: {
+      colaborador: {
+        nome: string;
+        id: number;
+        username: string;
+        email: string;
+        role: string;
+        cpf: number;
+        status: string;
+      };
+    };
+  };
+}
+export interface prospToken {
+  username: {
+    colaborador: {
+      id: number;
+      nome: string;
+      cpf: number;
+      email: string;
+      equipe_id: string;
+      tipo: string;
+      status: string;
+    };
+    token: string;
+  };
+}
 
-declare module NextAuth {
-  interface User {
+interface propsSessionPage {
+  user: {
+    id: number;
     username: string;
-  }
-
-  interface Session {
-    user: User & {
-      id: UserId;
-      username: string;
-      colaborador: string;
-    };
-    token: {
-      username: string;
-      colaborador: string;
-      token: string;
-    };
-  }
+    email: string;
+    role: string;
+    cpf: number;
+    status: number;
+  };
+  tokenUser: string;
 }

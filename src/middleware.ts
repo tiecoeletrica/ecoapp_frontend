@@ -2,14 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export default function middleware(request: NextRequest) {
   const token = request.cookies.get("next-auth.session-token")?.value;
-  const signInUrl = new URL("/", request.url);
-  const dashboardURL = new URL("/admin", request.url);
-
+  // console.log(request);
+  const signInUrl = new URL("/public/sign-in", request.url);
+  const dashboardURL = new URL("private/dashboard", request.url);
   if (!token) {
     if (request.nextUrl.pathname === "/") {
       return NextResponse.next();
     }
-    console.log(signInUrl);
     return NextResponse.redirect(signInUrl);
   }
 
@@ -21,10 +20,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/",
-    "/dashboard/turno",
-    "/dashboard/programacao",
-    "/dashboard/users",
-  ],
+  matcher: ["/", "/private/:path*"],
 };
