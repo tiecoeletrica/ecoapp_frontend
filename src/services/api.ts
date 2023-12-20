@@ -10,7 +10,7 @@ const getSessionToken = async () => {
 };
 
 const sessionToken = await getSessionToken();
-
+console.log(sessionToken);
 const api = axios.create({
   baseURL: "https://touching-grizzly-logical.ngrok-free.app",
   headers: {
