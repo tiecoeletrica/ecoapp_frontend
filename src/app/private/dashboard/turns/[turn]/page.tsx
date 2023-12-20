@@ -6,7 +6,7 @@ import { propsSessionPage } from "@/types/next-auth";
 async function getInfoAboutTurn(id: string) {
   const session: propsSessionPage | null = await getServerSession(authOptions);
 
-  const res = fetch(`http://192.168.0.11:3000/turnos/${id}`, {
+  const res = fetch(`https://backend-api-ej9i.onrender.com/turnos/${id}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Token ${session?.tokenUser}`,

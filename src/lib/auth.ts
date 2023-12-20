@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
         const response = await axios.post(
-          "http://192.168.0.11:3000/autenticacao",
+          "https://touching-grizzly-logical.ngrok-free.app/autenticacao",
           {
             email: credentials?.email,
             senha: credentials?.password,
