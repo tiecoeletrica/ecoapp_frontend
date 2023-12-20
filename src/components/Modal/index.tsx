@@ -10,9 +10,9 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="inset-0 z-50 flex items-center justify-center p-4 border-radius">
-      <div className="absolute inset-0 bg-black opacity-50" />
-      <div className="relative z-10  w-full max-w-6xl overflow-y-auto bg-white p-6 md:rounded-lg">
+    <div className="absolute inset-0  flex items-center justify-center p-4 border-radius">
+      <div className="absolute inset-0 bg-black opacity-90" />
+      <div className="relative z-10  w-full max-w-6xl overflow-y-auto bg-white p-6 md:rounded-lg border border-gray">
         <div className="h-10"></div>
         <button
           type="button"
