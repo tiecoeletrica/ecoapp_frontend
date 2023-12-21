@@ -35,3 +35,8 @@ export interface QuestionType {
   data_inicial: string;
   data_final: string;
 }
+export interface QuestionTypePost {
+  pergunta_resposta: string;
+  tipo: string;
+  categoria: string;
+}
