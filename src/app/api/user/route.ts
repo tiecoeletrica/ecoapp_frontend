@@ -1,4 +1,9 @@
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+
+import { authOptions } from "../auth/[...nextauth]/route";
+
+import { propsSessionPage } from "@/types/next-auth";
 
 interface User {
   nome: string;
@@ -19,14 +24,15 @@ export async function POST(req: Request) {
       tipo: body.tipo,
     };
 
-    console.log(user);
+    const session: propsSessionPage | null =
+      await getServerSession(authOptions);
     const response = await fetch(
       "https://touching-grizzly-logical.ngrok-free.app/colaboradores",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDMwOTc2MjgsImV4cCI6MTcwMzE1NTIyOCwic3ViIjoiOCJ9._Wuyt2J9BMK-jLpbX6vuQsOkxTpfF-pczxdMp7qTBuk`,
+          Authorization: `Token ${session?.tokenUser}`,
         },
         body: JSON.stringify(user),
       },

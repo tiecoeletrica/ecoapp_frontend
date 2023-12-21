@@ -28,7 +28,7 @@ export interface VehiclesTeamType {
   contrato: strings;
 }
 export interface QuestionType {
-  id: number;
+  id: string;
   pergunta_resposta: string;
   tipo: string;
   categoria: string;

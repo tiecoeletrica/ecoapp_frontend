@@ -78,7 +78,7 @@ const Sidebar = ({ typeAcess }: { typeAcess: string }) => {
             link: "/private/dashboard/questions",
           },
         ],
-        link: "#",
+        link: "/private/dashboard/register",
       },
       {
         id: "minha conta",

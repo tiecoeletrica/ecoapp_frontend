@@ -34,10 +34,12 @@ const createUserFormSchema = z.object({
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
 interface FormRegisterProps {
+  token: string;
   isOpen: boolean;
   onClose: () => void;
 }
 const FormRegister: React.FC<FormRegisterProps> = ({
+  token,
   isOpen,
   onClose,
 }: FormRegisterProps) => {
@@ -54,6 +56,7 @@ const FormRegister: React.FC<FormRegisterProps> = ({
     onClose();
     reset();
   }
+
   const [loading, setLoading] = useState(false);
   const onSubmit = async (values: createUserFormData) => {
     setSuccessContent("");
@@ -62,7 +65,7 @@ const FormRegister: React.FC<FormRegisterProps> = ({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDMwOTc2MjgsImV4cCI6MTcwMzE1NTIyOCwic3ViIjoiOCJ9._Wuyt2J9BMK-jLpbX6vuQsOkxTpfF-pczxdMp7qTBuk`,
+        Authorization: `Token ${token}`,
       },
       body: JSON.stringify({
         nome: values.nome,

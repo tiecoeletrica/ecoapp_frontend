@@ -11,9 +11,10 @@ import { SearchUsersType } from "@/types/rotes";
 
 interface FormProps {
   data: SearchUsersType[];
+  token: string;
 }
 
-const Form = ({ data }: FormProps) => {
+const Form = ({ data, token }: FormProps) => {
   const [originalList] = useState(data);
   const router = useRouter();
   const [filteredUsers, setFilteredUsers] =
@@ -57,7 +58,11 @@ const Form = ({ data }: FormProps) => {
     <div className="w-full mx-auto px-4 relative">
       {modalIsOpen ? (
         <div className="mt-72">
-          <FormRegister isOpen={modalIsOpen} onClose={handleOpenModal} />
+          <FormRegister
+            token={token}
+            isOpen={modalIsOpen}
+            onClose={handleOpenModal}
+          />
         </div>
       ) : (
         <div>
