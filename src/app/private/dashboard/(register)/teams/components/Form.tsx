@@ -4,9 +4,8 @@ import { useState } from "react";
 import { FaAngleLeft, FaAngleRight, FaPen, FaPlus } from "react-icons/fa";
 
 import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
-import Modal from "@/components/Modal";
-import Select from "@/components/Select";
+
+import FormRegister from "./FormRegister";
 
 import { VehiclesTeamType } from "@/types/rotes";
 interface FormProps {
@@ -57,47 +56,7 @@ const Form = ({ data }: FormProps) => {
     <div className="w-full mx-auto px-4 relative">
       {modalIsOpen ? (
         <div className="mt-72">
-          <Modal isOpen={modalIsOpen} onClose={handleOpenModal}>
-            <div>
-              <Input
-                className="mb-2"
-                title="Equipe"
-                type="text"
-                placeholder="Digite a equipe"
-              />
-              <div className="flex flex-col md:flex-row gap-4 mb-2">
-                <Select title="Tipo">
-                  <option>LV</option>
-                  <option>LM</option>
-                  <option>APOIO</option>
-                  <option>RETRO</option>
-                </Select>
-                <Select title="Contrato">
-                  <option>Celpe</option>
-                  <option>Coelba</option>
-                </Select>
-              </div>
-              <div className="flex flex-col md:flex-row gap-4 mb-2">
-                <Select title="Coordenador">
-                  <option value="Juninho Pernambucano">
-                    Juninho Pernambucano
-                  </option>
-                  <option value="Edilson">Edilson</option>
-                  <option value="Pedrinho">Pedrinho</option>
-                </Select>
-                <Select title="Supervisor">
-                  <option value="Juninho Pernambucano">
-                    Juninho Pernambucano
-                  </option>
-                  <option value="Edilson">Edilson</option>
-                  <option value="Pedrinho">Pedrinho</option>
-                </Select>
-              </div>
-            </div>
-            <div className="w-full flex justify-end mt-4">
-              <Button className="md:max-w-xs">Cadastrar</Button>
-            </div>
-          </Modal>
+          <FormRegister isOpen={modalIsOpen} onClose={handleOpenModal} />
         </div>
       ) : (
         <div>
