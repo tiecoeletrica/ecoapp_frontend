@@ -62,9 +62,38 @@ const Form = ({ data, token }: FormProps) => {
       setDelete([...isDelete, id]);
     }
   };
-  const handleDelete = () => {
-    console.log(isDelete);
-    setDelete([]);
+  const handleDelete = async () => {
+    isDelete?.forEach(async (id) => {
+      try {
+        const response = await fetch("/api/question", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+          },
+          body: JSON.stringify({
+            id: id,
+          }),
+        });
+
+        const data = await response.json();
+        if (data.message == "Pergunta atualizada com sucesso!") {
+          const beforeDeleteList = filteredUsers.filter((item) => {
+            if (item.id != id) {
+              return item;
+            }
+          });
+          setFilteredUsers(beforeDeleteList);
+        } else {
+          alert(
+            "Erro ao deletar pergunta. Por favor, tente novamente mais tarde!",
+          );
+        }
+        setDelete([]);
+      } catch (error) {
+        console.error("Erro ao deletar pergunta:", error);
+      }
+    });
   };
 
   return (

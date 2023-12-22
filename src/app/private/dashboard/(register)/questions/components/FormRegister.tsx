@@ -38,13 +38,14 @@ const FormRegister: React.FC<FormRegisterProps> = ({
     onClose();
     reset();
   }
+
   const [successContent, setSuccessContent] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values: createUserFormData) => {
     setSuccessContent("");
     setLoading(true);
-    const response = await fetch("/api/create_question", {
+    const response = await fetch("/api/question", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

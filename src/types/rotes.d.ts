@@ -28,15 +28,15 @@ export interface VehiclesTeamType {
   contrato: strings;
 }
 export interface QuestionType {
-  id: number;
+  id: string;
   pergunta_resposta: string;
   tipo: string;
   categoria: string;
   data_inicial: string;
-  data_final: string;
+  data_final: string | null;
 }
 export interface QuestionTypePost {
-  id: number;
+  id?: number;
   pergunta_resposta: string;
   tipo: string;
   categoria: string;
@@ -47,4 +47,10 @@ export interface vehicleType {
   placa: string;
   tipo: string;
   equipe_id: number;
+}
+export interface serviceType {
+  id: number;
+  codigo: string;
+  descricao: string;
+  unidade: string;
 }

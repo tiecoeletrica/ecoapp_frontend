@@ -9,7 +9,9 @@ import { QuestionType } from "@/types/rotes";
 
 const getQuestions = async () =>
   api.get("/perguntas").then((response) => {
-    return response.data;
+    return response.data.filter(
+      (item: QuestionType) => item.data_final === null,
+    );
   });
 
 const questionsPage = async () => {

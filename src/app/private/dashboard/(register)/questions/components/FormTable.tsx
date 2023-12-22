@@ -15,13 +15,12 @@ const FormTable: React.FC<FormTableProps> = ({
 }) => {
   return (
     <div>
-      {currentItems.length ? (
+      {currentItems ? (
         <div>
           <div className="overflow-x-auto max-h-[45%]">
             <table className="min-w-full table-auto rounded overflow-x">
               <thead>
                 <tr className="border-b">
-                  <th className="border-b text-center">ID</th>
                   <th className="border-b text-center">Tipo</th>
                   <th className="border-b text-center">Categoria</th>
                   <th className="border-b text-center">Pergunta</th>
@@ -31,7 +30,6 @@ const FormTable: React.FC<FormTableProps> = ({
               <tbody>
                 {currentItems.map((d) => (
                   <tr key={d.id} className="cursor-pointer hover:bg-gray-200">
-                    <td className="border-b py-2 text-center">{d.id}</td>
                     <td className="border-b py-2 text-center">{d.tipo}</td>
                     <td className="border-b py-2 text-center">{d.categoria}</td>
                     <td className="border-b py-2 text-center">
