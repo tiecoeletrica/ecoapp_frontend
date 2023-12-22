@@ -38,14 +38,24 @@ const Sidebar = ({ typeAcess }: { typeAcess: string }) => {
         link: "/private/dashboard",
       },
       {
-        id: "obras",
-        label: "Obras",
+        id: "producao",
+        label: "Produção",
         icon: FaCalendarAlt,
         subMenu: [
           { id: "sub1-1", label: "Turnos", link: "/private/dashboard/turns" },
           {
             id: "sub1-2",
             label: "Programação",
+            link: "/private/dashboard/shedule",
+          },
+          {
+            id: "sub1-3",
+            label: "Obra",
+            link: "/private/dashboard/shedule",
+          },
+          {
+            id: "sub1-4",
+            label: "Serviços",
             link: "/private/dashboard/shedule",
           },
         ],

@@ -14,7 +14,7 @@ export interface SearchUsersType {
   cpf: string;
   email: string;
   tipo: string;
-  toekn: string;
+  token: string;
 }
 
 // faça a tipagem disso que esta acima

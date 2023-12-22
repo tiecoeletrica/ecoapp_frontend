@@ -3,7 +3,6 @@ import React from "react";
 import { FaPen } from "react-icons/fa";
 
 import { VehiclesTeamType } from "@/types/rotes";
-
 interface FormTableProps {
   currentItems: VehiclesTeamType[];
   onClick: (id: number) => void;

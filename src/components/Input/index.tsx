@@ -27,6 +27,7 @@ export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof inputVariants> {
   inputSize?: string;
+  isPassword?: boolean;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(

@@ -18,6 +18,13 @@ const Form = ({ data, token }: FormProps) => {
   const typeData = data.map((item) => item.tipo);
   const optionType = [...new Set(typeData)];
 
+  // const typeLider = users.map((item) => {
+  //   if (item.tipo === "ENCARREGADO") {
+  //     return [item.id, item.nome];
+  //   }
+  // });
+  // const optionEncarregado = [...new Set(typeLider)];
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [originalList] = useState(data);
@@ -53,7 +60,6 @@ const Form = ({ data, token }: FormProps) => {
   }
 
   function handleClick(id: number) {
-    console.log(id);
     router.push(`teams/${id}`);
   }
 

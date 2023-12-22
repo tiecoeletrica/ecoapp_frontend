@@ -16,6 +16,7 @@ const Form = ({ data }: FormProps) => {
     useState<serviceType[]>(originalList);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
+
   // const pageCount = Math.ceil(filteredUsers.length / itemsPerPage);
 
   const lastItemIndex = currentPage * itemsPerPage;

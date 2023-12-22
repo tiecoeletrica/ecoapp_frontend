@@ -46,7 +46,23 @@ const FormRegister: React.FC<FormRegisterProps> = ({
   }
 
   const onSubmit = async (values: createUserFormData) => {
-    console.log(values);
+    const response = await fetch("/api/teams", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify({
+        equipe: values.equipe,
+        tipo: values.tipo,
+        lider_id: values.lider,
+        supervisor_id: values.supervisor,
+        coordenador_id: values.coordenador,
+        contrato: values.contrato,
+      }),
+    });
+
+    console.log(response);
   };
 
   return (
@@ -91,10 +107,9 @@ const FormRegister: React.FC<FormRegisterProps> = ({
                 className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
               >
                 <option value="Escolha">Escolha</option>
-                <option value="LM">LM</option>
-                <option value="LV">LV</option>
-                <option value="APOIO">APOIO</option>
-                <option value="RETROESCAVADEIRA">RETROESCAVADEIRA</option>
+                <option value="TEST 1">TEST 2</option>
+                <option value="TEST 2">TEST 2</option>
+                <option value="TESTE 3">TESTE 3</option>
               </select>
               {errors.lider && (
                 <span className="mt-2">{errors.lider.message}</span>

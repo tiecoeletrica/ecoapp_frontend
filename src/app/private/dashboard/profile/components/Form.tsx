@@ -7,19 +7,15 @@ import { Input } from "@/components/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
-const createUserFormSchema = z.object({
-  nome: z.string().min(6, "Digite o seu nome completo."),
-  email: z
-    .string()
-    .email("Formato de email inválido")
-    .refine((email) => {
-      return email.endsWith("@ecoeletrica.com.br");
-    }, "O email deve conter o domínio da Ecoelétrica"),
-  password: z.string().min(6, "A senha deve conter no mínimo 6 caracteres."),
-  confirmPassword: z
-    .string()
-    .min(6, "A senha deve conter no mínimo 6 caracteres."),
-});
+const createUserFormSchema = z
+  .object({
+    password: z.string().min(6).nonempty("Senha obrigatória"),
+    confirmPassword: z.string().min(6).nonempty("Confirmação obrigatória"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas precisam ser iguais",
+    path: ["confirmPassword"],
+  });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
 const Form = ({ name, email }: { name: string; email: string }) => {
@@ -30,9 +26,8 @@ const Form = ({ name, email }: { name: string; email: string }) => {
   } = useForm<createUserFormData>({
     resolver: zodResolver(createUserFormSchema),
   });
-
-  const onSubmit = async (values: createUserFormData) => {
-    alert(values);
+  const onSubmit = (values: createUserFormData) => {
+    console.log(values);
   };
 
   return (
@@ -51,7 +46,6 @@ const Form = ({ name, email }: { name: string; email: string }) => {
           value={name}
           className="mb-2"
         />
-        {/* {errors.nome && <span>{errors.nome.message}</span>} */}
       </div>
       <div>
         <Input
@@ -61,7 +55,6 @@ const Form = ({ name, email }: { name: string; email: string }) => {
           value={email}
           className="mb-2"
         />
-        {/* {errors.email && <span>{errors.email.message}</span>} */}
       </div>
       <div className="mb-2 w-full">
         <Input

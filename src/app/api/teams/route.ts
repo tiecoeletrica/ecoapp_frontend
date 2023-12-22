@@ -1,25 +1,34 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 import { propsSessionPage } from "@/types/next-auth";
-import { QuestionTypePost } from "@/types/rotes";
-
+interface typeFull {
+  equipe: string;
+  tipo: string;
+  lider_id: string;
+  supervisor_id: string;
+  coordenador_id: string;
+  contrato: string;
+}
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     console.log(body);
-    const user: QuestionTypePost = {
-      pergunta_resposta: body.pergunta_resposta,
+    const user: typeFull = {
+      equipe: body.equipe,
       tipo: body.tipo,
-      categoria: body.categoria,
+      lider_id: body.lider_id,
+      supervisor_id: body.supervisor_id,
+      coordenador_id: body.coordenador_id,
+      contrato: body.contrato,
     };
-
+    console.log(body);
     const session: propsSessionPage | null =
       await getServerSession(authOptions);
     const response = await fetch(
-      "https://touching-grizzly-logical.ngrok-free.app/perguntas",
+      "https://touching-grizzly-logical.ngrok-free.app/equipes",
       {
         method: "POST",
         headers: {
@@ -29,6 +38,7 @@ export async function POST(req: Request) {
         body: JSON.stringify(user),
       },
     );
+    console.log(response);
     if (response.status === 201) {
       return NextResponse.json(
         {
@@ -41,13 +51,14 @@ export async function POST(req: Request) {
       return "Pergunta não foi criada. Por favor, tente novamente mais tarde.";
     }
   } catch (error) {
-    return NextResponse.json(
-      {
-        user: null,
-        message:
-          "Erro ao criar usuário. Por favor, tente novamente mais tarde.",
-      },
-      { status: 500 },
-    );
+    console.log(error);
+    // return NextResponse.json(
+    //   {
+    //     user: null,
+    //     message:
+    //       "Erro ao criar pergunta. Por favor, tente novamente mais tarde.",
+    //   },
+    //   { status: 500 },
+    // );
   }
 }
