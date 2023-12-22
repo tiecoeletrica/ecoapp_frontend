@@ -19,13 +19,16 @@ const createUserFormSchema = z.object({
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
 interface FormRegisterProps {
+  token: string;
   isOpen: boolean;
   onClose: () => void;
 }
 const FormRegister: React.FC<FormRegisterProps> = ({
+  token,
   isOpen,
   onClose,
 }: FormRegisterProps) => {
+  console.log(token);
   const {
     register,
     handleSubmit,

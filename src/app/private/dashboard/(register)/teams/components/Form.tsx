@@ -1,20 +1,26 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaAngleLeft, FaAngleRight, FaPen, FaPlus } from "react-icons/fa";
 
-import { Button } from "@/components/Button";
-
+import FormFilter from "./FormFilter";
 import FormRegister from "./FormRegister";
+import FormTable from "./FormTable";
+import Pagination from "./Pagination";
 
 import { VehiclesTeamType } from "@/types/rotes";
 interface FormProps {
   data: VehiclesTeamType[];
+  token: string;
 }
 
-const Form = ({ data }: FormProps) => {
-  const [originalList] = useState(data);
+const Form = ({ data, token }: FormProps) => {
   const router = useRouter();
+  const typeData = data.map((item) => item.tipo);
+  const optionType = [...new Set(typeData)];
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const [originalList] = useState(data);
   const [filteredUsers, setFilteredUsers] =
     useState<VehiclesTeamType[]>(originalList);
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,136 +48,40 @@ const Form = ({ data }: FormProps) => {
       setFilteredUsers(filteredList);
     }
   };
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   function handleOpenModal() {
     setModalIsOpen(!modalIsOpen);
   }
 
   function handleClick(id: number) {
+    console.log(id);
     router.push(`teams/${id}`);
   }
 
   return (
     <div className="w-full mx-auto px-4 relative">
-      {modalIsOpen ? (
-        <div className="mt-72">
-          <FormRegister isOpen={modalIsOpen} onClose={handleOpenModal} />
-        </div>
+      {!modalIsOpen ? (
+        <>
+          <FormFilter
+            optionType={optionType}
+            handleOpenModal={handleOpenModal}
+            handleFilterChange={handleFilterChange}
+          />
+          <FormTable currentItems={currentItems} onClick={handleClick} />
+          <Pagination
+            currentPage={currentPage}
+            pageCount={pageCount}
+            goToPreviousPage={goToPreviousPage}
+            setCurrentPage={setCurrentPage}
+            goToNextPage={goToNextPage}
+          />
+        </>
       ) : (
-        <div>
-          <div className="flex flex-col md:flex-row justify-between items-center mb-10">
-            <div>
-              <h1 className="font-bold text-3xl">Lista de equipes</h1>
-            </div>
-            <div className=" w-full flex flex-col md:flex-row justify-between md:max-w-[600px] mt-4 gap-4 ">
-              <select
-                className="border-none outline-none focus:no-underline md:max-w-[50%] w-full"
-                onChange={handleFilterChange}
-              >
-                <option value="Filtrar por">Filtrar por</option>
-                <option value="LM">LM</option>
-                <option value="LV">LV</option>
-                <option value="APOIO">APOIO</option>
-              </select>
-              <Button
-                className="px-10 md:max-w-[50%] w-full"
-                onClick={handleOpenModal}
-              >
-                <FaPlus className="mr-2" />
-                Equipe
-              </Button>
-            </div>
-          </div>
-          {currentItems.length ? (
-            <div>
-              <div className="overflow-x-auto">
-                <table className="w-full table-auto rounded overflow-x">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="border-b text-center">ID</th>
-                      <th className="border-b text-center">Equipe</th>
-                      <th className="border-b text-center">Tipo</th>
-                      <th className="border-b text-center">Coordenador</th>
-                      <th className="border-b text-center">Supervisor</th>
-                      <th className="border-b text-center">Contrato</th>
-                      <th className="border-b text-center">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentItems.map((d) => (
-                      <tr
-                        key={d.id}
-                        className="cursor-pointer hover:bg-gray-200"
-                      >
-                        <td className="border-b py-2 text-center">{d.id}</td>
-                        <td className="border-b py-2 text-center">
-                          {d.equipe}
-                        </td>
-                        <td className="border-b py-2 text-center">{d.tipo}</td>
-                        <td className="border-b py-2 text-center">
-                          {d.coordenador_id}
-                        </td>
-                        <td className="border-b py-2 text-center">
-                          {d.supervisor_id}
-                        </td>
-                        <td className="border-b py-2 text-center">
-                          {d.contrato}
-                        </td>
-                        <td className="border-b py-2 text-center">
-                          <FaPen
-                            className="mx-auto cursor-pointer"
-                            onClick={() => handleClick(d.id)}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="flex justify-end items-center my-4">
-                <button
-                  onClick={goToPreviousPage}
-                  className={`px-3 py-1 mx-1 ${
-                    currentPage === 1
-                      ? "cursor-not-allowed text-gray-500"
-                      : "bg-blue-500 text-white"
-                  }`}
-                >
-                  <FaAngleLeft />
-                </button>
-                {Array.from({ length: pageCount }, (_, index) => index + 1).map(
-                  (number) => (
-                    <button
-                      key={number}
-                      onClick={() => setCurrentPage(number)}
-                      className={`px-3 py-1 mx-1 ${
-                        currentPage === number
-                          ? "bg-gray-300 text-white hover:bg-gray-300 rounded"
-                          : "bg-blue-500 text-gray-500"
-                      }`}
-                    >
-                      {number}
-                    </button>
-                  ),
-                )}
-                <button
-                  onClick={goToNextPage}
-                  className={`px-3 py-1 mx-1 ${
-                    currentPage === pageCount
-                      ? "cursor-not-allowed text-gray-500"
-                      : "bg-blue-500 text-gray-500"
-                  }`}
-                >
-                  <FaAngleRight />
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center font-bold">
-              Não há dados para essa pesquisa...
-            </div>
-          )}
+        <div className="mt-72">
+          <FormRegister
+            token={token}
+            isOpen={modalIsOpen}
+            onClose={handleOpenModal}
+          />
         </div>
       )}
     </div>
