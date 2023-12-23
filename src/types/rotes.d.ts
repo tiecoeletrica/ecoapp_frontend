@@ -54,3 +54,13 @@ export interface serviceType {
   descricao: string;
   unidade: string;
 }
+
+export interface usersType {
+  id: number;
+  nome: string;
+  cpf: number;
+  email: string;
+  equipe_id: string;
+  tipo: string;
+  status: string;
+}

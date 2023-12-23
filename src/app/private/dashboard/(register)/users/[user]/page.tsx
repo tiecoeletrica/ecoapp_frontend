@@ -1,5 +1,7 @@
 import { getServerSession } from "next-auth";
 
+import FormUpdate from "./components/FormUpdate";
+
 import { authOptions } from "@/lib/auth";
 import { propsSessionPage } from "@/types/next-auth";
 
@@ -20,8 +22,8 @@ async function getInfoAboutUser(id: string) {
 }
 
 const turnPageId = async ({ params }: { params: { user: string } }) => {
-  const data = await getInfoAboutUser(params.user);
-  return <div>{JSON.stringify(data)}</div>;
+  const response = await getInfoAboutUser(params.user);
+  return <FormUpdate data={response} />;
 };
 
 export default turnPageId;

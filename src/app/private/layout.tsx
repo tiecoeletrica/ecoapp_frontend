@@ -16,7 +16,7 @@ export default async function PrivateLayout({
 }) {
   const session: propsSessionPage | null = await getServerSession(authOptions);
   if (!session) {
-    redirect("/");
+    redirect("/public/sign-in");
   }
 
   return (
