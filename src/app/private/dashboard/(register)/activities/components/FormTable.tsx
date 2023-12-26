@@ -2,74 +2,50 @@
 import React from "react";
 import { FaPen } from "react-icons/fa";
 
-import { Button } from "@/components/Button";
-import { Input } from "@/components/Input";
-
 import { serviceType } from "@/types/rotes";
-
 interface FormTableProps {
   currentItems: serviceType[];
-  optionType: string[];
+  onClick: (id: number) => void;
 }
 
-const FormTable: React.FC<FormTableProps> = ({ currentItems, optionType }) => {
+const FormTable: React.FC<FormTableProps> = ({ currentItems, onClick }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 mt-10">
-      <div className="max-w-[50%] w-full">
-        <Input title="Código" type="text" placeholder="Código" />
-        <Input title="Código" type="text" placeholder="Código" />
-        <div className="my-2">
-          <label className="font-bold">Unidade de media</label>
-          <select className="border border-gray outline-none focus:no-underline h-10 w-full rounded">
-            <option value="Escolha">Escolha</option>
-            {optionType?.map((d) => (
-              <option key={d} value={d}>
-                {d}
-              </option>
-            ))}
-          </select>
-        </div>
-        <Button>Criar</Button>
-      </div>
-      <div className="max-w-[50%] w-full">
-        {currentItems.length ? (
-          <div>
-            <div className="overflow-x-auto ">
-              <table className="min-w-full table-auto rounded overflow-x">
-                <thead>
-                  <tr className="border-b ">
-                    <th className="border-b text-center">Nome</th>
-                    <th className="border-b text-center">CPF</th>
-                    <th className="border-b text-center">E-mail</th>
-                    <th className="border-b text-center">Ação</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentItems.map((d) => (
-                    <tr
-                      key={d.id}
-                      className="cursor-pointer hover:bg-gray-200 border-l border-r"
+    <div>
+      {currentItems.length ? (
+        <div>
+          <div className="overflow-x-auto max-h-[45%]">
+            <table className="min-w-full table-auto rounded overflow-x">
+              <thead>
+                <tr className="border-b">
+                  <th className="border-b text-center">Código</th>
+                  <th className="border-b text-center">Descrição</th>
+                  <th className="border-b text-center">Unidade</th>
+                  <th className="border-b text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentItems.map((d) => (
+                  <tr key={d.id} className="cursor-pointer hover:bg-gray-200">
+                    <td className="border-b py-2 text-center">{d.codigo}</td>
+                    <td className="border-b py-2 text-center">{d.descricao}</td>
+                    <td className="border-b py-2 text-center">{d.unidade}</td>
+                    <td
+                      className="border-b py-2 text-center"
+                      onClick={() => onClick(d.id)}
                     >
-                      <td className="border-b py-2 text-center">{d.codigo}</td>
-                      <td className="border-b py-2 text-center">
-                        {d.descricao}
-                      </td>
-                      <td className="border-b py-2 text-center">{d.unidade}</td>
-                      <td className="border-b py-2 text-center">
-                        <FaPen />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      <FaPen className="mx-auto" />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ) : (
-          <div className="text-center font-bold">
-            Não há dados para essa pesquisa...
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="text-center font-bold">
+          Não há dados para essa pesquisa...
+        </div>
+      )}
     </div>
   );
 };

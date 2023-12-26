@@ -49,7 +49,7 @@ export interface vehicleType {
   equipe_id: number;
 }
 export interface serviceType {
-  id: number;
+  id?: number;
   codigo: string;
   descricao: string;
   unidade: string;

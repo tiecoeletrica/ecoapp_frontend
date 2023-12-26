@@ -17,14 +17,6 @@ const Form = ({ data, token }: FormProps) => {
   const router = useRouter();
   const typeData = data.map((item) => item.tipo);
   const optionType = [...new Set(typeData)];
-
-  // const typeLider = users.map((item) => {
-  //   if (item.tipo === "ENCARREGADO") {
-  //     return [item.id, item.nome];
-  //   }
-  // });
-  // const optionEncarregado = [...new Set(typeLider)];
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [originalList] = useState(data);
