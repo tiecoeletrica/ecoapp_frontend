@@ -1,4 +1,3 @@
-// FormTable.jsx
 import React from "react";
 import { FaPen } from "react-icons/fa";
 
@@ -24,14 +23,14 @@ const FormTable: React.FC<FormTableProps> = ({ currentItems, onClick }) => {
                 </tr>
               </thead>
               <tbody>
-                {currentItems.map((d) => (
+                {currentItems?.map((d) => (
                   <tr key={d.id} className="cursor-pointer hover:bg-gray-200">
                     <td className="border-b py-2 text-center">{d.codigo}</td>
                     <td className="border-b py-2 text-center">{d.descricao}</td>
                     <td className="border-b py-2 text-center">{d.unidade}</td>
                     <td
                       className="border-b py-2 text-center"
-                      onClick={() => onClick(d.id)}
+                      onClick={() => onClick(d.id as number)}
                     >
                       <FaPen className="mx-auto" />
                     </td>

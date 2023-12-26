@@ -20,10 +20,16 @@ async function getInfoAboutActivies(id: string) {
   const data = (await res).json();
   return data;
 }
-
 const turnPageId = async ({ params }: { params: { active: string } }) => {
+  const session: propsSessionPage | null = await getServerSession(authOptions);
   const response = await getInfoAboutActivies(params.active);
-  return <FormUpdate data={response} />;
+  return (
+    <FormUpdate
+      data={response}
+      token={session?.tokenUser || ""}
+      id={params.active}
+    />
+  );
 };
 
 export default turnPageId;

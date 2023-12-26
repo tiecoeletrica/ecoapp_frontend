@@ -52,7 +52,7 @@ const Form = ({ data, token }: FormProps) => {
   }
 
   function handleClick(id: number) {
-    router.push(`activies/${id}`);
+    router.push(`activities/${id}`);
   }
 
   return (

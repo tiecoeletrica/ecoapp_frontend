@@ -44,35 +44,39 @@ export async function POST(req: Request) {
     );
   }
 }
-// export async function PUT(req: Request) {
-//   const session: propsSessionPage | null = await getServerSession(authOptions);
-//   try {
-//     const body = await req.json();
-//     const response = await fetch(
-//       `https://touching-grizzly-logical.ngrok-free.app/perguntas/${body.id}`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Token ${session?.tokenUser}`,
-//         },
-//         body: JSON.stringify(body),
-//       },
-//     );
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+    const service = {
+      codigo: body.codigo,
+      descricao: body.descricao,
+      unidade: body.unidade,
+    };
+    const response = await fetch(
+      `https://touching-grizzly-logical.ngrok-free.app/servicos/${body.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${body.token}`,
+        },
+        body: JSON.stringify(service),
+      },
+    );
 
-//     if (response.ok) {
-//       return NextResponse.json({ message: "Pergunta atualizada com sucesso!" });
-//     } else {
-//       return "Falha ao atualizar pergunta. Por favor, tente novamente mais tarde.";
-//     }
-//   } catch (error) {
-//     console.error("Erro durante a atualização:", error);
-//     return NextResponse.json(
-//       {
-//         message:
-//           "Erro durante a atualização. Por favor, tente novamente mais tarde.",
-//       },
-//       { status: 500 },
-//     );
-//   }
-// }
+    if (response.ok) {
+      return NextResponse.json({ message: "Serviço atualizado com sucesso!" });
+    } else {
+      return "Falha ao atualizar serviço. Por favor, tente novamente mais tarde.";
+    }
+  } catch (error) {
+    console.error("Erro durante a atualização:", error);
+    return NextResponse.json(
+      {
+        message:
+          "Erro durante a atualização. Por favor, tente novamente mais tarde.",
+      },
+      { status: 500 },
+    );
+  }
+}
