@@ -49,6 +49,8 @@ interface FormProps {
   id: string;
 }
 const FormUpdate = ({ data, id }: FormProps) => {
+  const [successContent, setSuccessContent] = useState("");
+  const [loading, setLoading] = useState(false);
   const supervisores = ["1", "2", "3", "4"];
   const coordenadores = ["1", "2", "3", "4"];
   const { back } = useRouter();
@@ -81,6 +83,9 @@ const FormUpdate = ({ data, id }: FormProps) => {
     setContrato(e.target.value);
   };
   const onSubmit = async (values: createUserFormData) => {
+    setSuccessContent("");
+    setLoading(true);
+
     const response = await fetch("/api/teams", {
       method: "PUT",
       body: JSON.stringify({
@@ -98,6 +103,7 @@ const FormUpdate = ({ data, id }: FormProps) => {
     } else {
       alert("Erro no momento de atualizar!");
     }
+    setLoading(false);
   };
   return (
     <form
