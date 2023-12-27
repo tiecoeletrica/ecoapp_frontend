@@ -6,9 +6,10 @@ import { vehicleType } from "@/types/rotes";
 
 interface FormTableProps {
   currentItems: vehicleType[];
+  onClick: (id: number) => void;
 }
 
-const FormTable: React.FC<FormTableProps> = ({ currentItems }) => {
+const FormTable: React.FC<FormTableProps> = ({ currentItems, onClick }) => {
   return (
     <div>
       {currentItems.length ? (
@@ -30,7 +31,10 @@ const FormTable: React.FC<FormTableProps> = ({ currentItems }) => {
                     <td className="border-b py-2 text-center">{d.tipo}</td>
                     <td className="border-b py-2 text-center">{d.equipe_id}</td>
                     <td className="border-b py-2 text-center">CIDADE</td>
-                    <td className="border-b py-2 text-center">
+                    <td
+                      className="border-b py-2 text-center"
+                      onClick={() => onClick(d.id)}
+                    >
                       <FaPen />
                     </td>
                   </tr>

@@ -80,6 +80,14 @@ const FormRegister: React.FC<FormRegisterProps> = ({
               )}
             </div>
           </div>
+          <div className="flex flex-col w-full">
+            <label className="font-bold">Tipo</label>
+            <select className="border border-gray outline-none focus:no-underline h-10 w-full rounded">
+              <option value="CAMINHÃO">CAMINHÃO</option>
+              <option value="LEVE">LEVE</option>
+              <option value="APOIO">APOIO</option>
+            </select>
+          </div>
           <div className="flex justify-end">
             <Button className="max-w-[200px] w-full mt-4">Cadastrar</Button>
           </div>

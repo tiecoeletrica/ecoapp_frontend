@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import FormFilter from "./FormFilter";
@@ -13,6 +14,7 @@ interface FormProps {
 }
 
 const Form = ({ data, token }: FormProps) => {
+  const router = useRouter();
   const typeData = data.map((item) => item.tipo);
   const optionType = [...new Set(typeData)];
 
@@ -50,6 +52,10 @@ const Form = ({ data, token }: FormProps) => {
     setModalIsOpen(!modalIsOpen);
   }
 
+  function handleClick(id: number) {
+    router.push(`vehicles/${id}`);
+  }
+
   return (
     <div className="w-full mx-auto px-4 relative">
       {!modalIsOpen ? (
@@ -59,7 +65,7 @@ const Form = ({ data, token }: FormProps) => {
             handleOpenModal={handleOpenModal}
             handleFilterChange={handleFilterChange}
           />
-          <FormTable currentItems={currentItems} />
+          <FormTable currentItems={currentItems} onClick={handleClick} />
           <Pagination
             currentPage={currentPage}
             pageCount={pageCount}
