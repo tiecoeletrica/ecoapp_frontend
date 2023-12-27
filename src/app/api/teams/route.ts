@@ -24,7 +24,6 @@ export async function POST(req: Request) {
       coordenador_id: body.coordenador_id,
       contrato: body.contrato,
     };
-    console.log(body);
     const session: propsSessionPage | null =
       await getServerSession(authOptions);
     const response = await fetch(
@@ -51,14 +50,44 @@ export async function POST(req: Request) {
       return "Pergunta não foi criada. Por favor, tente novamente mais tarde.";
     }
   } catch (error) {
-    console.log(error);
-    // return NextResponse.json(
-    //   {
-    //     user: null,
-    //     message:
-    //       "Erro ao criar pergunta. Por favor, tente novamente mais tarde.",
-    //   },
-    //   { status: 500 },
-    // );
+    return NextResponse.json(
+      {
+        user: null,
+        message:
+          "Erro ao criar pergunta. Por favor, tente novamente mais tarde.",
+      },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PUT(req: Request) {
+  const session: propsSessionPage | null = await getServerSession(authOptions);
+  try {
+    const body = await req.json();
+    const response = await fetch(
+      `https://touching-grizzly-logical.ngrok-free.app/equipes/${body.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${session?.tokenUser}`,
+        },
+        body: JSON.stringify(body),
+      },
+    );
+    if (response.ok) {
+      return NextResponse.json({ message: "Equipe atualizada com sucesso!" });
+    } else {
+      return "Falha ao atualizar equipe. Por favor, tente novamente mais tarde.";
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message:
+          "Erro durante a atualização. Por favor, tente novamente mais tarde.",
+      },
+      { status: 500 },
+    );
   }
 }

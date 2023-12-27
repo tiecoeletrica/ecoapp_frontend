@@ -23,7 +23,7 @@ async function getInfoAboutTeam(id: string) {
 
 const turnPageId = async ({ params }: { params: { team: string } }) => {
   const response = await getInfoAboutTeam(params.team);
-  return <FormUpdate data={response} />;
+  return <FormUpdate data={response} id={params.team} />;
 };
 
 export default turnPageId;

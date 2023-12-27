@@ -1,35 +1,27 @@
-import React, { ReactNode } from "react";
-
-interface OptionProps {
+"use client";
+type OptionSelect = {
+  label: string;
   value: string;
-  children: ReactNode;
-}
-interface SelectProps {
-  title: string;
-  children: React.ReactElement<OptionProps> | React.ReactElement<OptionProps>[];
-}
-
-const Option: React.FC<OptionProps> = ({ value, children }) => {
-  return <option value={value}>{children}</option>;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: string[];
 };
 
-const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  function SelectComponent({ title, children }, ref) {
-    return (
-      <div className="flex flex-col w-full text-black">
-        <label className="font-bold ">{title}</label>
-        <select
-          ref={ref}
-          className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
-        >
-          <option value="">Escolha</option>
-          {children}
-        </select>
-      </div>
-    );
-  },
-);
-
-Select.displayName = "Select";
-
-export { Select, Option };
+const Select = ({ label, options, value, onChange }: OptionSelect) => {
+  return (
+    <div className="w-full">
+      <label className="font-bold">{label}</label>
+      <select
+        value={value}
+        onChange={onChange}
+        className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
+      >
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+export default Select;
