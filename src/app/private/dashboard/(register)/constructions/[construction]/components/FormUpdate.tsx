@@ -7,48 +7,27 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import Loading from "@/components/Loading";
 
+import { constructionType } from "@/types/rotes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-interface TypesTurnId {
-  id: string;
-  nome: string;
-  tipo: string;
-  lider_id: string;
-  supervisor_id: string;
-  coordenador_id: string;
-  contrato: string;
-  equipe: string;
-  status: string;
-}
 
 const createUserFormSchema = z.object({
-  equipe: z.string().nonempty("Equipe obrigatória"),
-  tipo: z.string().refine((value) => value !== "Escolha", {
-    message: "Tipo obrigatório",
-  }),
-  lider: z.string().refine((value) => value !== "Escolha", {
-    message: "Encarrgado obrigatório",
-  }),
-  contrato: z.string().refine((value) => value !== "Escolha", {
-    message: "Contrato obrigatório",
-  }),
-  status: z.string().refine((value) => value !== "Escolha", {
-    message: "Status obrigatório",
-  }),
-  supervisor: z.string(),
-  coordenador: z.string(),
+  projeto: z.string(),
+  descricao: z.string(),
+  status: z.string(),
+  carteira: z.string(),
+  cidade: z.string(),
+  utd: z.string(),
 });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
 interface FormProps {
-  data: TypesTurnId;
+  data: constructionType;
   id: string;
 }
 const FormUpdate = ({ data, id }: FormProps) => {
   const [successContent, setSuccessContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const supervisores = ["1", "2", "3", "4", "5", "6", "7", "8"];
-  const coordenadores = ["1", "2", "3", "4", "5", "6", "7", "8"];
   const { back } = useRouter();
   const {
     register,
@@ -57,32 +36,6 @@ const FormUpdate = ({ data, id }: FormProps) => {
   } = useForm<createUserFormData>({
     resolver: zodResolver(createUserFormSchema),
   });
-  const [encarregado, setEncarregado] = useState(data.lider_id || "");
-  const handleEncarregadoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setEncarregado(e.target.value);
-  };
-  const [tipo, setTipo] = useState(data.tipo || "");
-  const handleTipoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTipo(e.target.value);
-  };
-
-  const [status, setStatus] = useState(data.status || "");
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setStatus(e.target.value);
-  };
-
-  const [supervisor, setSupervisor] = useState(data.supervisor_id || "");
-  const handleSupervisorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSupervisor(e.target.value);
-  };
-  const [coordenador, setCoodenador] = useState(data.coordenador_id || "");
-  const handleCoordenadorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCoodenador(e.target.value);
-  };
-  const [contrato, setContrato] = useState(data.contrato || "");
-  const handleContratoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setContrato(e.target.value);
-  };
   const [buttonClicked, setButtonClicked] = useState<string | null>(null);
   const handleButtonClick = (buttonName: string) => {
     setButtonClicked(buttonName);
@@ -94,19 +47,21 @@ const FormUpdate = ({ data, id }: FormProps) => {
     } else if (buttonClicked === "atualizar") {
       setSuccessContent("");
       setLoading(true);
-      const response = await fetch("/api/teams", {
+
+      const response = await fetch("/api/constructions", {
         method: "PUT",
         body: JSON.stringify({
           id: id,
-          lider_id: values.lider,
-          equipe: values.equipe,
-          tipo: values.tipo,
-          contrato: values.contrato,
-          supervisor_id: values.supervisor,
-          coordenador_id: values.coordenador,
-          status: values.status,
+          projeto: values.projeto,
+          descricao: values.descricao,
+          cidade: values.cidade,
+          utd: values.utd,
+          carteira: values.carteira,
+          // status: values.status,
+          status: "true",
         }),
       });
+      console.log(response);
       if (response.status == 201 || response.status == 200) {
         setSuccessContent("Atualizado com sucesso!");
       } else {
@@ -114,6 +69,35 @@ const FormUpdate = ({ data, id }: FormProps) => {
       }
       setLoading(false);
     }
+  };
+
+  const [projeto, setProjeto] = useState(data.projeto || "");
+  const handleProjetoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setProjeto(e.target.value);
+  };
+
+  const [status, setStatus] = useState(data.status || "");
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatus(e.target.value);
+  };
+
+  const [descricao, setDescricao] = useState(data.descricao || "");
+  const handleDescricaoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDescricao(e.target.value);
+  };
+  const [utd, setUtd] = useState(data.utd || "");
+  const handleUTDChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setUtd(e.target.value);
+  };
+
+  const [cidade, setCidade] = useState(data.cidade || "");
+  const handleCidadeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCidade(e.target.value);
+  };
+
+  const [carteira, setCarteira] = useState(data.carteira || "");
+  const handleCarteiraChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCarteira(e.target.value);
   };
   return (
     <form
@@ -134,127 +118,113 @@ const FormUpdate = ({ data, id }: FormProps) => {
           </div>
         </div>
       )}
-      <div className="flex flex-col md:flex-row w-full gap-4 mb-2 mt-4">
-        <div className="w-full">
-          <Input
-            title="Equipe"
-            type="text"
-            placeholder="Equipe"
-            {...register("equipe")}
-            className="w-full "
-            value={data.equipe}
-          />
-          {errors.equipe && (
-            <span className="mt-2">{errors.equipe.message}</span>
-          )}
-        </div>
-        <div className="w-full">
-          <label className="font-bold">Tipo</label>
-          <select
-            {...register("tipo")}
-            value={tipo}
-            onChange={handleTipoChange}
-            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
-          >
-            <option value="Escolha">Escolha</option>
-            <option value="LM">LM</option>
-            <option value="LV">LV</option>
-          </select>
-          {errors.tipo && <span className="mt-2">{errors.tipo.message}</span>}
-        </div>
-      </div>
       <div className="flex flex-col md:flex-row w-full gap-4 mb-2">
-        <div className="w-full">
-          <label className="font-bold">Encarregado</label>
-          <select
-            {...register("lider")}
-            value={encarregado}
-            onChange={handleEncarregadoChange}
-            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
-          >
-            <option value="Escolha">Escolha</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-          </select>
-          {errors.lider && <span className="mt-2">{errors.lider.message}</span>}
+        <div className="w-full mb-2">
+          <Input
+            title="Projeto"
+            type="text"
+            placeholder="Projeto"
+            {...register("projeto")}
+            className="w-full mb-2"
+            value={projeto}
+            onChange={() => handleProjetoChange}
+          />
+          {errors.projeto && <span>{errors.projeto.message}</span>}
         </div>
-        <div className="w-full">
-          <label className="font-bold">Contrato</label>
-          <select
-            {...register("contrato")}
-            value={contrato}
-            onChange={handleContratoChange}
-            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
-          >
-            <option value="Escolha">Escolha</option>
-            <option value="COELBA">COELBA</option>
-            <option value="CELPE">CELPE</option>
-          </select>
-          {errors.coordenador && (
-            <span className="mt-2">{errors.contrato?.message}</span>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-col md:flex-row w-full gap-4 mb-4">
-        <div className="w-full">
-          <label className="font-bold">Coordenador</label>
-          <select
-            {...register("coordenador")}
-            value={coordenador}
-            onChange={handleCoordenadorChange}
-            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
-          >
-            <option value="Escolha">Escolha</option>
-            {coordenadores.map((coordenador, index) => (
-              <option key={coordenador} value={index}>
-                {coordenador}
-              </option>
-            ))}
-          </select>
-          {errors.coordenador && (
-            <span className="mt-2">{errors.coordenador.message}</span>
-          )}
-        </div>
-        <div className="w-full">
-          <label className="font-bold">Supervisor</label>
-          <select
-            {...register("supervisor")}
-            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
-            value={supervisor}
-            onChange={handleSupervisorChange}
-          >
-            <option value="Escolha">Escolha</option>
-            {supervisores.map((supervisor, index) => (
-              <option key={supervisor} value={index}>
-                {supervisor}
-              </option>
-            ))}
-          </select>
-          {errors.supervisor && (
-            <span className="mt-2">{errors.supervisor.message}</span>
-          )}
-        </div>
-        <div className="w-full">
+        <div className="mb-2">
           <label className="font-bold">Status</label>
           <select
             {...register("status")}
-            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
             value={status}
             onChange={handleStatusChange}
+            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
           >
-            <option value="Escolha">Escolha</option>
-            <option value="1">Ativo</option>
-            <option value="0">Inativo</option>
+            <option value="Escolha" selected>
+              Escolha
+            </option>
+            <option value="PROGRAMADA">PROGRAMADA</option>
+            <option value="EM EXECUÇÃO">EM EXECUÇÃO</option>
+            <option value="EXECUTADA">EXECUTADA</option>
+            <option value="ADIADA">ADIADA</option>
           </select>
-          {errors.supervisor && (
-            <span className="mt-2">{errors.supervisor.message}</span>
+          {errors.status && (
+            <span className="mt-2">{errors.status.message}</span>
           )}
         </div>
       </div>
+      <div className="mb-2">
+        <label className="font-bold">Descrição</label>
+        <textarea
+          className="w-full border border-solid border-gray focus:no-underline rounded outline-none p-2 resize-none"
+          cols={30}
+          rows={2}
+          {...register("descricao")}
+          placeholder="Descrição da obra"
+          value={descricao}
+          onChange={() => handleDescricaoChange}
+        ></textarea>
+        {errors.descricao && (
+          <span className="mt-2">{errors.descricao.message}</span>
+        )}
+      </div>
+      <div className="flex flex-col justify-between md:flex-row w-full gap-4 mb-2">
+        <div className="w-full mb-2">
+          <label className="font-bold">UTD</label>
+          <select
+            {...register("utd")}
+            value={utd}
+            onChange={handleUTDChange}
+            className="border border-gray outline-none focus:no-underline h-10 w-full rounded mb-2"
+          >
+            <option value="Escolha">Escolha</option>
+            <option value="VITÓRIA DA CONQUISTA">VITÓRIA DA CONQUISTA</option>
+            <option value="RIO DE CONTAS">RIO DE CONTAS</option>
+            <option value="ITABERABA">ITABERABA</option>
+            <option value="IRECÊ">IRECÊ</option>
+            <option value="BRUMADO">BRUMADO</option>
+          </select>
+          {errors.utd && <span className="mt-2">{errors.utd.message}</span>}
+        </div>
+        <div className="w-full mb-2">
+          <label className="font-bold">Cidade</label>
+          <select
+            {...register("cidade")}
+            value={cidade}
+            onChange={handleCidadeChange}
+            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
+          >
+            <option value="Escolha">Escolha</option>
+            <option value="VITÓRIA DA CONQUISTA">VITÓRIA DA CONQUISTA</option>
+            <option value="RIO DE CONTAS">RIO DE CONTAS</option>
+            <option value="ITABERABA">ITABERABA</option>
+            <option value="IRECÊ">IRECÊ</option>
+          </select>
+          {errors.cidade && (
+            <span className="mt-2">{errors.cidade.message}</span>
+          )}
+        </div>
+        <div className="w-full mb-2">
+          <label className="font-bold">Carteira</label>
+          <select
+            {...register("carteira")}
+            value={carteira}
+            onChange={handleCarteiraChange}
+            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
+          >
+            <option value="Escolha" selected>
+              Escolha
+            </option>
+            <option value="setembro/2022">setembro/2022</option>
+            <option value="setembro/2023">setembro/2023</option>
+            <option value="outubro/2023">outubro/2023</option>
+            <option value="setembro/2023">setembro/2023</option>
+          </select>
+          {errors.carteira && (
+            <span className="mt-2">{errors.carteira.message}</span>
+          )}
+        </div>
+      </div>
+
       <div className="w-full flex flex-col md:flex-row justify-between gap-4">
         <Button
           background={"return"}

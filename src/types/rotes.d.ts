@@ -72,5 +72,5 @@ export interface constructionType {
   cidade: string;
   utd: string;
   carteira: string;
-  status: boolean | string;
+  status: string;
 }

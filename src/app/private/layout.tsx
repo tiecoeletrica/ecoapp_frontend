@@ -26,7 +26,7 @@ export default async function PrivateLayout({
         <header>
           <Image
             src={Logo}
-            style={{ display: "block", margin: "auto" }}
+            style={{ display: "block", margin: "auto", paddingTop: "20px" }}
             width={160}
             height={160}
             alt="Logotipo da empresa EcoElétrica, contendo uma folha estilizada que se assemelha a um raio, com as cores azul e verde."

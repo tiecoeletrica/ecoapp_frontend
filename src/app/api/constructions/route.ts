@@ -1,5 +1,9 @@
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
+import { authOptions } from "../auth/[...nextauth]/route";
+
+import { propsSessionPage } from "@/types/next-auth";
 import { constructionType } from "@/types/rotes";
 
 export async function POST(req: Request) {
@@ -42,6 +46,39 @@ export async function POST(req: Request) {
         user: null,
         message:
           "Erro ao criar pergunta. Por favor, tente novamente mais tarde.",
+      },
+      { status: 500 },
+    );
+  }
+}
+export async function PUT(req: Request) {
+  try {
+    const session: propsSessionPage | null =
+      await getServerSession(authOptions);
+    const body = await req.json();
+    const response = await fetch(
+      `https://touching-grizzly-logical.ngrok-free.app/obras/${body.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${session?.tokenUser}`,
+        },
+        body: JSON.stringify(body),
+      },
+    );
+
+    if (response.ok) {
+      return NextResponse.json({ message: "Obra atualizada com sucesso!" });
+    } else {
+      return "Falha ao atualizar obra. Por favor, tente novamente mais tarde.";
+    }
+  } catch (error) {
+    console.error("Erro durante a atualização:", error);
+    return NextResponse.json(
+      {
+        message:
+          "Erro durante a atualização. Por favor, tente novamente mais tarde.",
       },
       { status: 500 },
     );
