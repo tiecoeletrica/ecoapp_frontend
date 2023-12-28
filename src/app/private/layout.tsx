@@ -22,7 +22,7 @@ export default async function PrivateLayout({
   return (
     <div className="h-screen flex flex-row justify-start">
       <Sidebar typeAcess={session?.user?.role} />
-      <div className="flex-1 pt-4">
+      <div className="flex-1">
         <header>
           <Image
             src={Logo}

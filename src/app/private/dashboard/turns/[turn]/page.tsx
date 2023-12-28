@@ -1,10 +1,14 @@
 import { getServerSession } from "next-auth";
 
+import Colaboradores from "./components/Colaboradores";
+import Header from "./components/Header";
+import Obras from "./components/Obras";
+import Loading from "@/components/Loading";
+
 import { authOptions } from "@/lib/auth";
 import { propsSessionPage } from "@/types/next-auth";
 
 async function getInfoAboutTurn(id: string) {
-  console.log(id);
   const session: propsSessionPage | null = await getServerSession(authOptions);
 
   const res = fetch(`https://backend-api-ej9i.onrender.com/turnos/${id}`, {
@@ -17,9 +21,22 @@ async function getInfoAboutTurn(id: string) {
   return data;
 }
 
+export interface TurnPageData {
+  turno: string[];
+  colaboradores: string[];
+  obras_turnos: string[];
+  fotos: string[];
+}
 const turnPageId = async ({ params }: { params: { turn: string } }) => {
-  const data = await getInfoAboutTurn(params.turn);
-  return <div>{JSON.stringify(data)} </div>;
+  const data: TurnPageData = await getInfoAboutTurn(params.turn);
+  console.log(data);
+  return (
+    <div className="max-w-[1000px] w-full mx-auto">
+      <Header />
+      <Colaboradores />
+      <Obras />
+    </div>
+  );
 };
 
 export default turnPageId;
