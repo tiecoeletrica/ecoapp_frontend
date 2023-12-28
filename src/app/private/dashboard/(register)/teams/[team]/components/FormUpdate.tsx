@@ -5,7 +5,10 @@ import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import Loading from "@/components/Loading";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 interface TypesTurnId {
   id: string;
   nome: string;
@@ -15,10 +18,8 @@ interface TypesTurnId {
   coordenador_id: string;
   contrato: string;
   equipe: string;
+  status: string;
 }
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
 const createUserFormSchema = z.object({
   equipe: z.string().nonempty("Equipe obrigatória"),
@@ -31,16 +32,11 @@ const createUserFormSchema = z.object({
   contrato: z.string().refine((value) => value !== "Escolha", {
     message: "Contrato obrigatório",
   }),
-  supervisor: z.string().transform((value) => {
-    if (value == "Escolha") {
-      return null;
-    }
+  status: z.string().refine((value) => value !== "Escolha", {
+    message: "Status obrigatório",
   }),
-  coordenador: z.string().transform((value) => {
-    if (value == "Escolha") {
-      return null;
-    }
-  }),
+  supervisor: z.string(),
+  coordenador: z.string(),
 });
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
@@ -51,14 +47,13 @@ interface FormProps {
 const FormUpdate = ({ data, id }: FormProps) => {
   const [successContent, setSuccessContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const supervisores = ["1", "2", "3", "4"];
-  const coordenadores = ["1", "2", "3", "4"];
+  const supervisores = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const coordenadores = ["1", "2", "3", "4", "5", "6", "7", "8"];
   const { back } = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
   } = useForm<createUserFormData>({
     resolver: zodResolver(createUserFormSchema),
   });
@@ -70,6 +65,12 @@ const FormUpdate = ({ data, id }: FormProps) => {
   const handleTipoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTipo(e.target.value);
   };
+
+  const [status, setStatus] = useState(data.status || "");
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatus(e.target.value);
+  };
+
   const [supervisor, setSupervisor] = useState(data.supervisor_id || "");
   const handleSupervisorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSupervisor(e.target.value);
@@ -82,35 +83,58 @@ const FormUpdate = ({ data, id }: FormProps) => {
   const handleContratoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setContrato(e.target.value);
   };
-  const onSubmit = async (values: createUserFormData) => {
-    setSuccessContent("");
-    setLoading(true);
+  const [buttonClicked, setButtonClicked] = useState<string | null>(null);
+  const handleButtonClick = (buttonName: string) => {
+    setButtonClicked(buttonName);
+  };
 
-    const response = await fetch("/api/teams", {
-      method: "PUT",
-      body: JSON.stringify({
-        id: id,
-        supervisor_id: values.supervisor,
-        coordenador_id: values.coordenador,
-        lider_id: encarregado,
-        equipe: values.equipe,
-        tipo: values.tipo,
-        contrato: values.contrato,
-      }),
-    });
-    if (response.status == 201 || response.status == 200) {
-      alert("Atualizado com sucesso");
-    } else {
-      alert("Erro no momento de atualizar!");
+  const onSubmit = async (values: createUserFormData) => {
+    if (buttonClicked === "voltar") {
+      back();
+    } else if (buttonClicked === "atualizar") {
+      setSuccessContent("");
+      setLoading(true);
+      const response = await fetch("/api/teams", {
+        method: "PUT",
+        body: JSON.stringify({
+          id: id,
+          lider_id: values.lider,
+          equipe: values.equipe,
+          tipo: values.tipo,
+          contrato: values.contrato,
+          supervisor_id: values.supervisor,
+          coordenador_id: values.coordenador,
+          status: values.status,
+        }),
+      });
+      if (response.status == 201 || response.status == 200) {
+        setSuccessContent("Atualizado com sucesso!");
+      } else {
+        setSuccessContent("Houve um erro! Agora qual foi eu não sei.");
+      }
+      setLoading(false);
     }
-    setLoading(false);
   };
   return (
     <form
       className="max-w-[1000px] w-full mx-auto mt-10 p-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col md:flex-row w-full gap-4 mb-2">
+      {loading && <Loading />}
+      {successContent && (
+        <div>
+          <div
+            className={`flex justify-center w-full ${
+              successContent === "Atualizado com sucesso!"
+                ? "bg-green-400"
+                : "bg-red-600"
+            } text-white font-bold py-1 max-w-[50%] mx-auto rounded`}
+          >
+            {successContent}
+          </div>
+        </div>
+      )}
+      <div className="flex flex-col md:flex-row w-full gap-4 mb-2 mt-4">
         <div className="w-full">
           <Input
             title="Equipe"
@@ -152,6 +176,9 @@ const FormUpdate = ({ data, id }: FormProps) => {
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
           </select>
           {errors.lider && <span className="mt-2">{errors.lider.message}</span>}
         </div>
@@ -182,8 +209,8 @@ const FormUpdate = ({ data, id }: FormProps) => {
             className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
           >
             <option value="Escolha">Escolha</option>
-            {coordenadores.map((coordenador) => (
-              <option key={coordenador} value={coordenador}>
+            {coordenadores.map((coordenador, index) => (
+              <option key={coordenador} value={index}>
                 {coordenador}
               </option>
             ))}
@@ -201,8 +228,8 @@ const FormUpdate = ({ data, id }: FormProps) => {
             onChange={handleSupervisorChange}
           >
             <option value="Escolha">Escolha</option>
-            {supervisores.map((supervisor) => (
-              <option key={supervisor} value={supervisor}>
+            {supervisores.map((supervisor, index) => (
+              <option key={supervisor} value={index}>
                 {supervisor}
               </option>
             ))}
@@ -211,12 +238,36 @@ const FormUpdate = ({ data, id }: FormProps) => {
             <span className="mt-2">{errors.supervisor.message}</span>
           )}
         </div>
+        <div className="w-full">
+          <label className="font-bold">Status</label>
+          <select
+            {...register("status")}
+            className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
+            value={status}
+            onChange={handleStatusChange}
+          >
+            <option value="Escolha">Escolha</option>
+            <option value="1">Ativo</option>
+            <option value="0">Inativo</option>
+          </select>
+          {errors.supervisor && (
+            <span className="mt-2">{errors.supervisor.message}</span>
+          )}
+        </div>
       </div>
       <div className="w-full flex flex-col md:flex-row justify-between gap-4">
-        <Button background={"return"} className="w-full" onClick={back}>
+        <Button
+          background={"return"}
+          className="w-full"
+          onClick={() => handleButtonClick("voltar")}
+        >
           Voltar
         </Button>
-        <Button className="w-full" type="submit">
+        <Button
+          className="w-full"
+          type="submit"
+          onClick={() => handleButtonClick("atualizar")}
+        >
           Atualizar
         </Button>
       </div>

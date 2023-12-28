@@ -11,6 +11,7 @@ interface typeFull {
   supervisor_id: string;
   coordenador_id: string;
   contrato: string;
+  status: string;
 }
 export async function POST(req: Request) {
   try {
@@ -23,6 +24,7 @@ export async function POST(req: Request) {
       supervisor_id: body.supervisor_id,
       coordenador_id: body.coordenador_id,
       contrato: body.contrato,
+      status: body.status,
     };
     const session: propsSessionPage | null =
       await getServerSession(authOptions);
@@ -37,7 +39,7 @@ export async function POST(req: Request) {
         body: JSON.stringify(user),
       },
     );
-    console.log(response);
+
     if (response.status === 201) {
       return NextResponse.json(
         {

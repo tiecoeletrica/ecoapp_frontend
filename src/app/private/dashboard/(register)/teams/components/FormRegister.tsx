@@ -1,8 +1,10 @@
 "use client";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import Loading from "@/components/Loading";
 import Modal from "@/components/Modal";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +30,9 @@ const FormRegister: React.FC<FormRegisterProps> = ({
   isOpen,
   onClose,
 }: FormRegisterProps) => {
-  console.log(token);
+  const [loading, setLoading] = useState(false);
+  const [successContent, setSuccessContent] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -46,6 +50,8 @@ const FormRegister: React.FC<FormRegisterProps> = ({
   }
 
   const onSubmit = async (values: createUserFormData) => {
+    setSuccessContent("");
+    setLoading(true);
     const response = await fetch("/api/teams", {
       method: "POST",
       headers: {
@@ -62,13 +68,34 @@ const FormRegister: React.FC<FormRegisterProps> = ({
       }),
     });
 
-    console.log(response);
+    if (response.status == 200 || response.status == 201) {
+      reset();
+      setSuccessContent("Equipe criada com sucesso!");
+    } else {
+      setSuccessContent("Erro ao criar equipe");
+    }
+    setLoading(false);
   };
 
   return (
     <div>
       <Modal title="Criar equipe" isOpen={isOpen} onClose={handleOpenModal}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {loading && <Loading />}
+
+        {successContent && (
+          <div>
+            <div
+              className={`flex justify-center w-full ${
+                successContent === "Usuário criado com sucesso!"
+                  ? "bg-green-400"
+                  : "bg-red-600"
+              } text-white font-bold py-1 max-w-[50%] mx-auto rounded`}
+            >
+              {successContent}
+            </div>
+          </div>
+        )}
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
           <div className="flex flex-col md:flex-row w-full gap-4 mb-2">
             <div className="w-full">
               <Input
@@ -107,9 +134,14 @@ const FormRegister: React.FC<FormRegisterProps> = ({
                 className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
               >
                 <option value="Escolha">Escolha</option>
-                <option value="TEST 1">TEST 2</option>
-                <option value="TEST 2">TEST 2</option>
-                <option value="TESTE 3">TESTE 3</option>
+                <option value="1">TEST 2</option>
+                <option value="2">TEST 2</option>
+                <option value="4">TESTE 3</option>
+                <option value="6">TESTE 3</option>
+                <option value="7">TESTE 3</option>
+                <option value="8">TESTE 3</option>
+                <option value="9">TESTE 3</option>
+                <option value="10">TESTE 3</option>
               </select>
               {errors.lider && (
                 <span className="mt-2">{errors.lider.message}</span>
@@ -122,8 +154,8 @@ const FormRegister: React.FC<FormRegisterProps> = ({
                 className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
               >
                 <option value="Escolha">Escolha</option>
-                {supervisores.map((supervisor) => (
-                  <option key={supervisor} value={supervisor}>
+                {supervisores.map((supervisor, index) => (
+                  <option key={supervisor} value={index}>
                     {supervisor}
                   </option>
                 ))}
@@ -141,8 +173,8 @@ const FormRegister: React.FC<FormRegisterProps> = ({
                 className="border border-gray outline-none focus:no-underline h-10 w-full rounded"
               >
                 <option value="Escolha">Escolha</option>
-                {coordenadores.map((coordenador) => (
-                  <option key={coordenador} value={coordenador}>
+                {coordenadores.map((coordenador, index) => (
+                  <option key={coordenador} value={index}>
                     {coordenador}
                   </option>
                 ))}
