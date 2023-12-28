@@ -16,6 +16,7 @@ interface User {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    console.log(body);
     const user: User = {
       nome: body.nome,
       email: body.email,

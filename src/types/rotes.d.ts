@@ -64,3 +64,13 @@ export interface usersType {
   tipo: string;
   status: string;
 }
+
+export interface constructionType {
+  id?: string;
+  projeto: string;
+  descricao: string;
+  cidade: string;
+  utd: string;
+  carteira: string;
+  status: boolean | string;
+}

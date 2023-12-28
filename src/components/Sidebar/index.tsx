@@ -87,6 +87,11 @@ const Sidebar = ({ typeAcess }: { typeAcess: string }) => {
             label: "Perguntas",
             link: "/private/dashboard/questions",
           },
+          {
+            id: "sub2-6",
+            label: "Obras",
+            link: "/private/dashboard/constructions",
+          },
         ],
         link: "/private/dashboard/register",
       },

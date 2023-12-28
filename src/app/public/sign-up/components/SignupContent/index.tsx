@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import Loading from "../../../../../../ecoapp_frontend/src/components/Loading";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 
@@ -26,6 +27,7 @@ const createUserFormSchema = z.object({
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
 const SignupContent = () => {
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const route = useRouter();
@@ -37,7 +39,8 @@ const SignupContent = () => {
     resolver: zodResolver(createUserFormSchema),
   });
   const onSubmit = async (values: createUserFormData) => {
-    const response = await fetch("/api/user", {
+    setLoading(true);
+    const response = await fetch("/api/sign-up", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,6 +57,7 @@ const SignupContent = () => {
     } else {
       setMessage("Houve um erro no momento da solicitação.");
     }
+    setLoading(false);
   };
 
   return (
@@ -100,7 +104,13 @@ const SignupContent = () => {
       {message && (
         <span className="block text-center mx-auto mb-4">{message}</span>
       )}
-      <Button type="submit">Solicitar</Button>
+      {!loading ? (
+        <Button type="submit">Solicitar</Button>
+      ) : (
+        <Button type="submit">
+          <Loading />
+        </Button>
+      )}
       <Link
         href={"/public/sign-in"}
         className="flex justify-center mt-5 font-bold text-blue-dark outline-none"

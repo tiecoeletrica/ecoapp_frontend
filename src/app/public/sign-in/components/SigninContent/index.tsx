@@ -3,8 +3,10 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import Loading from "../../../../../../ecoapp_frontend/src/components/Loading";
 import { Button } from "@/components/Button";
 import ButtonSignWithGoogle from "@/components/ButtonSignWithGoogle";
 import { Input } from "@/components/Input";
@@ -27,6 +29,7 @@ const createUserFormSchema = z.object({
 type createUserFormData = z.infer<typeof createUserFormSchema>;
 
 const SigninContent = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -37,6 +40,7 @@ const SigninContent = () => {
   });
 
   const onSubmit = async (values: createUserFormData) => {
+    setLoading(true);
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
@@ -49,6 +53,7 @@ const SigninContent = () => {
       router.refresh();
       router.push("/private/dashboard");
     }
+    setLoading(false);
   };
 
   return (
@@ -83,7 +88,13 @@ const SigninContent = () => {
         />
         {errors.password && <span>{errors.password.message}</span>}
       </div>
-      <Button type="submit">Entrar</Button>
+      {!loading ? (
+        <Button type="submit">Entrar</Button>
+      ) : (
+        <Button type="submit">
+          <Loading />
+        </Button>
+      )}
       <ButtonSignWithGoogle />
       <Link
         href={"/public/sign-up"}
