@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { propsSessionPage } from "@/types/next-auth";
 
 async function getInfoAboutTurn(id: string) {
+  console.log(id);
   const session: propsSessionPage | null = await getServerSession(authOptions);
 
   const res = fetch(`https://backend-api-ej9i.onrender.com/turnos/${id}`, {

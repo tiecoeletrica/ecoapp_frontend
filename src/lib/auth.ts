@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
         const response = await axios.post(
-          "https://backend-api-ej9i.onrender.com/autenticacao",
+          "https://touching-grizzly-logical.ngrok-free.app/autenticacao",
           {
             email: credentials?.email,
             senha: credentials?.password,

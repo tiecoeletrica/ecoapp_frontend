@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 
 import { cn } from "../../lib/utils-tailwind";
@@ -27,6 +28,7 @@ export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof inputVariants> {
   inputSize?: string;
+  isPassword?: boolean;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(

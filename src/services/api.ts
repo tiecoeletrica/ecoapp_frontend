@@ -10,9 +10,9 @@ const getSessionToken = async () => {
 };
 
 const sessionToken = await getSessionToken();
-
+console.log(sessionToken);
 const api = axios.create({
-  baseURL: "https://backend-api-ej9i.onrender.com/",
+  baseURL: "https://touching-grizzly-logical.ngrok-free.app",
   headers: {
     Authorization: `Token ${sessionToken}`,
   },
