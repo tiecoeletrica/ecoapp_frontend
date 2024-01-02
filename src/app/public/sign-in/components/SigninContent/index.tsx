@@ -1,6 +1,6 @@
 "use client";
 import { signIn } from "next-auth/react";
-// import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { Button } from "@/components/Button";
 import ButtonSignWithGoogle from "@/components/ButtonSignWithGoogle";
 import { Input } from "@/components/Input";
 
-// import Logo from "../../../../../../public/logo.svg";
+import Logo from "../../../../../../public/logo.svg";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -56,13 +56,13 @@ const SigninContent = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-[490px] w-full p-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
     >
-      {/* <Image
+      <Image
         style={{ display: "block", margin: "auto", marginBottom: "40px" }}
         src={Logo}
         width={200}
         height={200}
         alt="Logotipo da empresa EcoElétrica, contendo uma folha estilizada que se assemelha a um raio, com as cores azul e verde."
-      /> */}
+      />
       <div className="mb-2">
         <Input
           size="default"
